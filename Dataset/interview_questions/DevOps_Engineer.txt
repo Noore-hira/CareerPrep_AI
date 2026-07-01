@@ -1,0 +1,1000 @@
+1. Describe how you would design an end-to-end CI/CD pipeline for a microservices-based application using Git, Jenkins, Docker, Kubernetes, and Helm.
+
+2. How do you troubleshoot a service that repeatedly crashes?
+
+3. Explain the difference between a Docker image and a Docker container.
+
+4. A Docker container cannot reach the internet. How would you troubleshoot the issue?
+
+5. A Pod enters the `CrashLoopBackOff` state. How would you troubleshoot the issue?
+
+6. A Service cannot reach its Pods. How would you troubleshoot the issue?
+
+7. What deployment strategies are commonly used in CI/CD pipelines?
+
+8. How do you integrate Terraform into a CI/CD pipeline?
+
+9. Jenkins pipelines stop executing unexpectedly. How would you troubleshoot?
+
+10. How would you design a scalable CI/CD pipeline for hundreds of microservices?
+
+11. What is DevOps, and why is Linux considered the preferred operating system for DevOps engineers?
+
+12. What problem does Git solve?
+
+13. Explain the difference between Git and GitHub.
+
+14. What is a Git repository?
+
+15. Explain the Git workflow from creating a file to pushing it to a remote repository.
+
+16. What is the difference between `git fetch` and `git pull`?
+
+17. Explain the difference between `git merge` and `git rebase`.
+
+18. What is the purpose of `git stash`?
+
+19. Explain the difference between `git reset` and `git revert`.
+
+20. What is the purpose of Git tags?
+
+21. Which Linux networking commands do you use most frequently for troubleshooting, and in what situations?
+
+22. What is the lifecycle of a Docker container?
+
+23. What is a Docker image, and how is it built?
+
+24. What are Docker image layers?
+
+25. How do you optimize a Docker image for production?
+
+26. How do you scale services using Docker Compose?
+
+27. How do you create and publish your own Docker image?
+
+28. How do you reduce vulnerabilities in Docker images?
+
+29. How would you troubleshoot a container that repeatedly exits immediately after starting?
+
+30. A Docker image has grown to several gigabytes. How would you identify and reduce its size?
+
+31. Describe the steps you would take to troubleshoot a production application running inside Docker.
+
+32. What problems does Kubernetes solve that Docker alone cannot?
+
+33. What is a container runtime, and which runtimes are commonly used with Kubernetes?
+
+34. What is a Pod, and why is it the smallest deployable unit in Kubernetes?
+
+35. Why is it generally recommended to run one application container per Pod?
+
+36. Under what circumstances would you place multiple containers in the same Pod?
+
+37. Explain the difference between Pods and containers.
+
+38. What is a Service in Kubernetes?
+
+39. How does an Ingress differ from a LoadBalancer Service?
+
+40. How does Kubernetes perform service discovery?
+
+41. Describe the sequence of events that occurs when a user sends a request to a Kubernetes application exposed through an Ingress.
+
+42. How does the Kubernetes Scheduler decide where to place a Pod?
+
+43. A Pod repeatedly enters CrashLoopBackOff. How would you investigate it?
+
+44. A Deployment is not creating new Pods. What would you check?
+
+45. Why might a Pod remain in the ContainerCreating state?
+
+46. How would you troubleshoot ImagePullBackOff errors?
+
+47. Describe your complete troubleshooting approach when a production Kubernetes application becomes unavailable.
+
+48. What is Jenkins, and why is it widely used in DevOps?
+
+49. What is a Jenkins Pipeline?
+
+50. How would you troubleshoot a Jenkins job that suddenly starts failing?
+
+51. What stages would you include in a production-grade CI/CD pipeline?
+
+52. How do you store Terraform state securely in AWS?
+
+53. Describe your strategy for organizing Terraform code for a production AWS environment.
+
+54. Someone manually modified an AWS resource managed by Terraform. How would you handle the situation?
+
+55. What are the risks of committing the Terraform state file to Git?
+
+56. How would you reduce the execution time of a large Terraform deployment?
+
+57. What best practices do you follow when reviewing Terraform changes before deployment?
+
+58. Describe the process of provisioning an entire AWS environment using Terraform.
+
+59. Why is AWS widely used in modern DevOps environments?
+
+60. Describe how you would design a highly available three-tier web application on AWS using services such as VPC, EC2, ALB, Auto Scaling, RDS, and S3.
+
+61. How would you collect logs from Kubernetes Pods?
+
+62. Why should security be integrated into CI/CD pipelines?
+
+63. Which tools can be used to scan Docker images for vulnerabilities?
+
+64. How do you secure a Docker container in production?
+
+65. How do you manage credentials in CI/CD pipelines securely?
+
+66. A Kubernetes Pod is healthy, but users cannot access the application. What would you check?
+
+67. A Docker container keeps restarting in production. What are the possible causes?
+
+68. An application starts returning HTTP 500 errors after deployment. How would you troubleshoot?
+
+69. Terraform deployments start failing after a provider upgrade. What would you do?
+
+70. How would you migrate a monolithic application to microservices using Kubernetes?
+
+71. Explain the Linux boot process from power-on until the login prompt appears.
+
+72. What are the main differences between Linux distributions such as Ubuntu, CentOS, Rocky Linux, and Debian?
+
+73. What is the purpose of the Linux kernel?
+
+74. How do you determine the Linux distribution and kernel version installed on a server?
+
+75. Describe the Linux filesystem hierarchy and the purpose of directories like `/bin`, `/usr`, `/var`, `/opt`, and `/home`.
+
+76. How do file permissions work in Linux?
+
+77. How do you find files larger than 1 GB on a Linux system?
+
+78. What are pipes in Linux, and why are they useful?
+
+79. How do you check available disk space on a Linux server?
+
+80. How do you schedule recurring tasks in Linux?
+
+81. What is a process in Linux?
+
+82. How do you start, stop, restart, enable, and disable a service?
+
+83. How do you check whether a service failed to start?
+
+84. What is cherry-picking in Git?
+
+85. What is Docker, and what problems does it solve?
+
+86. How does Docker differ from a virtual machine?
+
+87. Describe the Docker architecture and the role of the Docker Engine.
+
+88. What is a Docker daemon, and what does it do?
+
+89. Explain the purpose of the Docker client.
+
+90. What happens internally when you execute `docker run nginx`?
+
+91. Explain the difference between `docker create`, `docker start`, and `docker run`.
+
+92. How do you list all running and stopped containers?
+
+93. How do you inspect a running container?
+
+94. How do you view logs generated by a container?
+
+95. How do you execute commands inside a running container?
+
+96. Explain the difference between `docker exec` and `docker attach`.
+
+97. How do you stop, restart, pause, and remove a container?
+
+98. What is the purpose of a Dockerfile?
+
+99. Explain each commonly used Dockerfile instruction.
+
+100. What happens if multiple `CMD` instructions are present in a Dockerfile?
+
+101. What are multi-stage Docker builds, and why are they useful?
+
+102. How do multi-stage builds reduce image size?
+
+103. How does Docker layer caching improve build performance?
+
+104. What causes Docker cache invalidation?
+
+105. What are Docker volumes, and why are they important?
+
+106. How do you persist data when a container is deleted?
+
+107. What are Docker networks?
+
+108. How do containers communicate with each other?
+
+109. How do you connect a running container to another network?
+
+110. What is Docker Compose, and when should you use it?
+
+111. What is the purpose of a `docker-compose.yml` (Compose file)?
+
+112. What is Docker Hub?
+
+113. What is Kubernetes, and why was it created?
+
+114. Explain the overall architecture of a Kubernetes cluster.
+
+115. What components make up the Kubernetes control plane?
+
+116. Explain the lifecycle of a Pod.
+
+117. What are init containers, and when are they useful?
+
+118. What are sidecar containers, and what problems do they solve?
+
+119. Why are ReplicaSets usually managed through Deployments?
+
+120. What is a Deployment?
+
+121. How does a Deployment ensure high availability?
+
+122. What is the difference between a Deployment and a StatefulSet?
+
+123. What is a Job in Kubernetes?
+
+124. Explain the purpose of Labels in Kubernetes.
+
+125. Explain the differences between ClusterIP, NodePort, LoadBalancer, and ExternalName Services.
+
+126. What is an Ingress resource?
+
+127. What is an Ingress Controller?
+
+128. What happens when you expose an application using an Ingress?
+
+129. How should sensitive information be managed securely in Kubernetes?
+
+130. A Pod remains in the `Pending` state. What would you check first?
+
+131. Explain the difference between Requests and Limits in Kubernetes.
+
+132. What happens if a container exceeds its CPU limit?
+
+133. What happens if a container exceeds its memory limit?
+
+134. What is Pod Affinity?
+
+135. What is Pod Anti-Affinity?
+
+136. Explain Horizontal Pod Autoscaling (HPA).
+
+137. Explain Vertical Pod Autoscaling (VPA).
+
+138. What is Container Storage Interface (CSI)?
+
+139. How do you restrict communication between Pods?
+
+140. What is a ServiceAccount?
+
+141. Why should applications avoid using the default ServiceAccount?
+
+142. Explain the Kubernetes reconciliation loop.
+
+143. How would you upgrade a Kubernetes cluster with minimal downtime?
+
+144. A Pod remains in the Pending state. What are all the possible causes?
+
+145. An Ingress returns HTTP 404 for every request. What could be wrong?
+
+146. An Ingress returns HTTP 502 or 503. How would you diagnose it?
+
+147. A Pod is continuously restarting even though the application seems healthy. What could cause this?
+
+148. How do you debug DNS resolution failures inside a Kubernetes cluster?
+
+149. How would you identify memory leaks in Kubernetes workloads?
+
+150. How do you determine why a Pod was evicted?
+
+151. What causes ErrImagePull?
+
+152. How do you perform a rolling restart of a Deployment?
+
+153. How would you roll back to a previous Deployment revision?
+
+154. How do you troubleshoot applications that cannot access Persistent Volumes?
+
+155. What are the advantages of Helm over manually applying Kubernetes manifests?
+
+156. Explain the Jenkins architecture.
+
+157. What are Jenkins Controllers and Agents?
+
+158. Explain the difference between Declarative and Scripted Pipelines.
+
+159. What is a Jenkinsfile?
+
+160. What are the main sections of a Declarative Pipeline?
+
+161. What are Pipeline stages and steps?
+
+162. What are Shared Libraries in Jenkins?
+
+163. How do you securely manage credentials in Jenkins?
+
+164. What types of credentials can Jenkins store?
+
+165. How do Jenkins agents communicate with the controller?
+
+166. What is Continuous Deployment?
+
+167. Explain the differences between Continuous Delivery and Continuous Deployment.
+
+168. How do automated testing stages improve deployment quality?
+
+169. Explain the differences between Blue-Green, Canary, Rolling, and Recreate deployments.
+
+170. How would you safely roll back a failed production deployment?
+
+171. What is Terraform, and what problems does it solve?
+
+172. How does Terraform differ from configuration management tools like Ansible?
+
+173. Explain the Terraform workflow from `init` to `apply`.
+
+174. What is the purpose of `terraform init`?
+
+175. What does `terraform plan` do?
+
+176. What happens during `terraform apply`?
+
+177. What is the purpose of `terraform destroy`?
+
+178. Explain the Terraform state file and why it is important.
+
+179. Why should the Terraform state file not be stored locally in a team environment?
+
+180. What problems can occur if two engineers run `terraform apply` simultaneously?
+
+181. What are Terraform providers?
+
+182. What are Terraform resources?
+
+183. What is a data source in Terraform?
+
+184. What are variables in Terraform, and how are they defined?
+
+185. Explain Terraform modules and their advantages.
+
+186. How do you structure reusable Terraform modules for large projects?
+
+187. What are workspaces in Terraform?
+
+188. Explain the Terraform dependency graph.
+
+189. How do you import existing infrastructure into Terraform?
+
+190. What lifecycle rules (`create_before_destroy`, `prevent_destroy`, etc.) are available in Terraform?
+
+191. How would you upgrade Terraform code while minimizing infrastructure downtime?
+
+192. Terraform reports that the state file is locked. How would you resolve the issue?
+
+193. A `terraform apply` fails halfway through. What steps would you take next?
+
+194. How do you identify resources that Terraform plans to recreate unexpectedly?
+
+195. How would you safely rename a Terraform resource without destroying it?
+
+196. What causes circular dependencies in Terraform, and how do you resolve them?
+
+197. How do you manage secrets securely in Terraform?
+
+198. How would you organize Terraform code for multiple environments such as development, staging, and production?
+
+199. Describe a strategy for handling Terraform modules shared across multiple teams.
+
+200. How would you recover from a corrupted Terraform state file?
+
+201. How does Ansible differ from Terraform?
+
+202. How would you troubleshoot an Ansible playbook that fails on only one server?
+
+203. How would you automate the configuration of hundreds of Linux servers using Ansible?
+
+204. Explain the AWS Global Infrastructure.
+
+205. What is an Amazon Machine Image (AMI)?
+
+206. Explain the principle of least privilege in AWS IAM.
+
+207. What is AWS STS, and why is it used?
+
+208. Explain Multi-AZ deployments in Amazon RDS.
+
+209. How would you secure a production AWS account?
+
+210. A production EC2 instance becomes unreachable. How would you troubleshoot the problem?
+
+211. How do you monitor Kubernetes clusters using Prometheus?
+
+212. How would you build a monitoring solution for a microservices architecture?
+
+213. Describe the monitoring stack you would recommend for a production Kubernetes cluster.
+
+214. What is DevSecOps, and how does it differ from traditional DevOps?
+
+215. How do you securely store secrets in a DevOps environment?
+
+216. What are the differences between Kubernetes Secrets and external secret managers?
+
+217. How do you manage AWS secrets securely?
+
+218. What is image scanning, and why is it important?
+
+219. What security best practices should be followed when writing Dockerfiles?
+
+220. How do you secure a Kubernetes cluster?
+
+221. Why should containers avoid running as the root user?
+
+222. What is Pod Security Admission, and why is it important?
+
+223. How do Network Policies improve Kubernetes security?
+
+224. How do you secure communication between microservices?
+
+225. How do you secure a Jenkins server?
+
+226. Describe a DevSecOps pipeline for a production application.
+
+227. A production website suddenly becomes unavailable. How would you begin troubleshooting?
+
+228. Memory utilization steadily increases until the application crashes. What could be happening?
+
+229. Kubernetes Nodes suddenly become NotReady. What would you investigate?
+
+230. DNS resolution fails for applications running in Kubernetes. How would you diagnose the issue?
+
+231. Design a deployment strategy that achieves zero downtime.
+
+232. How would you design infrastructure for high availability across multiple AWS Availability Zones?
+
+233. Design a Kubernetes architecture for a production e-commerce platform.
+
+234. How would you architect a centralized logging solution for multiple Kubernetes clusters?
+
+235. Design a secure secrets management architecture for a DevOps platform.
+
+236. How would you design a multi-environment (development, staging, production) infrastructure using Terraform?
+
+237. How would you architect a GitOps workflow using tools such as Argo CD or Flux?
+
+238. Design a secure Kubernetes cluster for financial or healthcare applications.
+
+239. Design a backup and recovery strategy for Kubernetes workloads and persistent data.
+
+240. Tell me about your experience working as a DevOps Engineer.
+
+241. Tell us about a deployment that failed. What happened, and what did you learn?
+
+242. How do you stay up to date with changes in DevOps tools and cloud technologies?
+
+243. If you joined our company tomorrow, how would you assess and improve our DevOps practices during your first 90 days?
+
+244. Why should we hire you as a DevOps Engineer, and what unique value would you bring to our team?
+
+245. What are Priority Classes in Kubernetes?
+
+246. What is Pod Preemption?
+
+247. What is an Operator in Kubernetes?
+
+248. Explain the difference between the kernel and the shell.
+
+249. What is the purpose of the `/etc` directory?
+
+250. What is the difference between a hard link and a symbolic link?
+
+251. How do you create, delete, copy, move, and rename files from the command line?
+
+252. What is the difference between `cp`, `mv`, and `rsync`?
+
+253. Explain the meaning of `rwxr-xr--`.
+
+254. What is the difference between `chmod`, `chown`, and `chgrp`?
+
+255. How do you recursively change ownership of an entire directory?
+
+256. How can you search for a file by name, type, or size?
+
+257. Explain the difference between `find` and `locate`.
+
+258. What is the purpose of the `grep` command?
+
+259. Explain the difference between `grep`, `egrep`, and `fgrep`.
+
+260. How do you count the number of lines, words, and characters in a file?
+
+261. Explain how input, output, and error redirection work.
+
+262. What is the difference between `>` and `>>`?
+
+263. How do you display only the first or last few lines of a file?
+
+264. How do you monitor a log file in real time?
+
+265. What is the difference between `cat`, `more`, `less`, and `tail`?
+
+266. How do you archive and compress files using `tar`?
+
+267. What is the difference between `gzip`, `bzip2`, and `xz`?
+
+268. How do you determine which directories are consuming the most disk space?
+
+269. What is the purpose of mounting a filesystem?
+
+270. How do you view mounted filesystems?
+
+271. How do you check inode usage?
+
+272. What happens when a filesystem runs out of inodes?
+
+273. How do you identify and delete large log files safely?
+
+274. What is the difference between `cron` and `systemd timers`?
+
+275. Explain the difference between a process and a thread.
+
+276. How do you list all running processes?
+
+277. What is the difference between `ps`, `top`, and `htop`?
+
+278. How do you terminate a running process?
+
+279. Explain the difference between `kill`, `pkill`, and `killall`.
+
+280. What do the signals `SIGTERM`, `SIGKILL`, and `SIGHUP` do?
+
+281. How do you identify which process is listening on a particular port?
+
+282. What is process priority, and how do `nice` and `renice` work?
+
+283. How do you run a process in the background?
+
+284. Explain the difference between foreground and background processes.
+
+285. How do you bring a background process back to the foreground?
+
+286. What is `systemd`, and why is it important?
+
+287. What is the purpose of `journalctl`?
+
+288. How do you check system uptime and load average?
+
+289. What does load average indicate?
+
+290. How would you investigate a server experiencing high CPU usage?
+
+291. What is Bash?
+
+292. What is the difference between Bash and SH?
+
+293. What is a shell script?
+
+294. How do you make a shell script executable?
+
+295. What is the purpose of the shebang (`#!/bin/bash`)?
+
+296. Explain the difference between environment variables and shell variables.
+
+297. How do you define and use variables in Bash?
+
+298. What are positional parameters in shell scripts?
+
+299. How do you accept user input within a Bash script?
+
+300. Explain the difference between single quotes and double quotes in Bash.
+
+301. How do `if`, `elif`, and `case` statements differ?
+
+302. What is the difference between `for`, `while`, and `until` loops?
+
+303. How do you capture the output of a command into a variable?
+
+304. How do you check the exit status of the previous command?
+
+305. How would you debug a Bash script?
+
+306. What is the difference between a local repository and a remote repository?
+
+307. When would you choose rebasing instead of merging?
+
+308. How do you undo the most recent commit without losing your changes?
+
+309. What is a merge conflict, and how do you resolve one?
+
+310. Describe a branching strategy you have used or would recommend for a development team.
+
+311. Explain the OSI model and the role of each layer.
+
+312. What is the difference between TCP and UDP?
+
+313. Explain the difference between HTTP and HTTPS.
+
+314. What happens behind the scenes when you enter a website URL into your browser?
+
+315. What is DNS, and how does domain name resolution work?
+
+316. What is the difference between a public IP address and a private IP address?
+
+317. What is the purpose of a subnet mask?
+
+318. Explain the difference between a switch, a router, and a gateway.
+
+319. How do you determine whether a network issue is caused by DNS, connectivity, or the application itself?
+
+320. What is the difference between `CMD` and `ENTRYPOINT`?
+
+321. When would you combine `ENTRYPOINT` with `CMD`?
+
+322. Explain the purpose of the `WORKDIR` instruction.
+
+323. What is the difference between `COPY` and `ADD`?
+
+324. Why is `COPY` generally preferred over `ADD`?
+
+325. What is the purpose of the `EXPOSE` instruction?
+
+326. Explain the difference between `ENV` and `ARG`.
+
+327. What are build arguments, and when should you use them?
+
+328. Explain the difference between bind mounts, named volumes, and tmpfs mounts.
+
+329. Explain the differences between bridge, host, none, overlay, and macvlan networks.
+
+330. What are the responsibilities of the control plane?
+
+331. What is the role of the API Server?
+
+332. What is etcd, and why is it critical?
+
+333. What is the role of the Scheduler?
+
+334. What does the Controller Manager do?
+
+335. What are worker nodes, and what components run on them?
+
+336. What is kubelet, and what are its responsibilities?
+
+337. What is kube-proxy, and how does it work?
+
+338. What is a ReplicaSet?
+
+339. What types of applications are best suited for StatefulSets?
+
+340. What is a DaemonSet, and when would you use one?
+
+341. Give examples of workloads commonly deployed using DaemonSets.
+
+342. What is a CronJob, and how does it differ from a Job?
+
+343. What is a Namespace, and why is it useful?
+
+344. How do Labels differ from Annotations?
+
+345. What are Selectors, and how are they used?
+
+346. What is CoreDNS, and what role does it play?
+
+347. What are ConfigMaps, and when should they be used?
+
+348. What are Secrets, and how do they differ from ConfigMaps?
+
+349. Explain the purpose of liveness, readiness, and startup probes.
+
+350. What happens if a liveness probe repeatedly fails?
+
+351. Why is it important to define resource requests and limits?
+
+352. What are Node Selectors?
+
+353. What are Node Affinity and Anti-Affinity rules?
+
+354. Explain Taints and Tolerations with a practical example.
+
+355. When should you use Taints instead of Node Affinity?
+
+356. What metrics does HPA use to scale applications?
+
+357. What is Cluster Autoscaler?
+
+358. Explain the differences between HPA, VPA, and Cluster Autoscaler.
+
+359. What are Persistent Volumes (PV)?
+
+360. What are Persistent Volume Claims (PVC)?
+
+361. Explain the relationship between StorageClass, PV, and PVC.
+
+362. What is dynamic volume provisioning?
+
+363. What happens when a Persistent Volume Claim is deleted?
+
+364. What access modes are available for Persistent Volumes?
+
+365. Explain the purpose of Network Policies.
+
+366. What problems do Network Policies solve?
+
+367. Explain Role-Based Access Control (RBAC).
+
+368. What are Roles and ClusterRoles?
+
+369. What are RoleBindings and ClusterRoleBindings?
+
+370. What are Admission Controllers?
+
+371. Explain Mutating and Validating Admission Controllers.
+
+372. A Node becomes NotReady. What steps would you take?
+
+373. A Node changes to Unknown status. What does it indicate?
+
+374. How would you investigate high CPU usage across a cluster?
+
+375. What is Helm, and why is it used?
+
+376. What problems does Helm solve?
+
+377. What is a Helm Chart?
+
+378. What files are commonly found inside a Helm Chart?
+
+379. What is the purpose of the `values.yaml` file?
+
+380. Explain Helm templates.
+
+381. How do template variables work in Helm?
+
+382. What are Helm Releases?
+
+383. How do you install, upgrade, and uninstall a Helm Release?
+
+384. What is the difference between `helm install` and `helm upgrade`?
+
+385. How do you roll back a Helm Release?
+
+386. How do you package and publish a Helm Chart?
+
+387. How would you manage different configurations for development, staging, and production using Helm?
+
+388. Why should builds run on agents instead of the controller?
+
+389. Why are Shared Libraries useful in large organizations?
+
+390. What is Continuous Integration (CI)?
+
+391. What is Continuous Delivery?
+
+392. Explain Infrastructure as Code (IaC) and its benefits.
+
+393. What are remote backends, and why are they recommended?
+
+394. What state locking is, and why is it necessary?
+
+395. Explain the difference between resources and data sources.
+
+396. What are output values, and when are they useful?
+
+397. When would you use multiple workspaces instead of separate state files?
+
+398. What is resource drift, and how do you detect it?
+
+399. What is Ansible, and what problems does it solve?
+
+400. Explain the Ansible architecture.
+
+401. What is an Ansible inventory?
+
+402. Explain the difference between static and dynamic inventories.
+
+403. What are Ansible playbooks?
+
+404. What is a role in Ansible?
+
+405. How do roles improve maintainability?
+
+406. What are Ansible modules?
+
+407. Explain the difference between modules and plugins.
+
+408. What are Ansible facts?
+
+409. How does Ansible gather system facts?
+
+410. What is idempotency, and why is it important?
+
+411. Explain the purpose of handlers in Ansible.
+
+412. What are variables in Ansible?
+
+413. What are templates, and how does Jinja2 work in Ansible?
+
+414. How do you encrypt sensitive data in Ansible?
+
+415. What is Ansible Vault?
+
+416. What is the difference between Regions and Availability Zones?
+
+417. Why should production workloads use multiple Availability Zones?
+
+418. What is Amazon EC2?
+
+419. Explain the different EC2 instance families and their use cases.
+
+420. What is the difference between On-Demand, Reserved, Spot, and Savings Plans?
+
+421. How do Security Groups differ from Network ACLs?
+
+422. How would you create a custom AMI?
+
+423. Explain Elastic IP addresses.
+
+424. What is Amazon VPC?
+
+425. What are public and private subnets?
+
+426. What is an Internet Gateway?
+
+427. What is a NAT Gateway, and why is it needed?
+
+428. Explain the purpose of Route Tables.
+
+429. What is Amazon S3, and what are common use cases?
+
+430. Explain S3 storage classes and when to use each.
+
+431. What is bucket versioning, and why is it useful?
+
+432. What is an IAM user, group, role, and policy?
+
+433. Explain the difference between an IAM role and an IAM user.
+
+434. What is an Application Load Balancer (ALB)?
+
+435. How does an ALB differ from a Network Load Balancer (NLB)?
+
+436. What is Auto Scaling, and how does it improve application availability?
+
+437. Explain the purpose of Amazon CloudWatch.
+
+438. What metrics would you monitor for an EC2 instance?
+
+439. What is Amazon Route 53?
+
+440. Explain how DNS failover works in Route 53.
+
+441. What is Amazon RDS, and what advantages does it provide over self-managed databases?
+
+442. Why is monitoring essential in a production environment?
+
+443. What is the difference between monitoring, logging, and observability?
+
+444. What are the three pillars of observability?
+
+445. What is Prometheus, and how does it collect metrics?
+
+446. Explain the pull model used by Prometheus.
+
+447. What are exporters in Prometheus?
+
+448. What is PromQL, and why is it useful?
+
+449. What is Alertmanager, and how does it integrate with Prometheus?
+
+450. How do you prevent alert fatigue in production environments?
+
+451. What is Grafana, and how does it differ from Prometheus?
+
+452. How do you create dashboards in Grafana?
+
+453. Which metrics are most important for monitoring a production application?
+
+454. What are the RED and USE monitoring methodologies?
+
+455. What is centralized logging, and why is it important?
+
+456. Explain the ELK Stack and the role of Elasticsearch, Logstash, and Kibana.
+
+457. What is Fluentd or Fluent Bit, and why are they used?
+
+458. What is Loki, and how does it differ from Elasticsearch?
+
+459. How do you investigate an application outage using logs and metrics?
+
+460. What is distributed tracing?
+
+461. What is OpenTelemetry, and why is it becoming popular?
+
+462. How do you correlate logs, metrics, and traces during incident investigation?
+
+463. What is HashiCorp Vault, and when would you use it?
+
+464. What is Software Composition Analysis (SCA)?
+
+465. What is Static Application Security Testing (SAST)?
+
+466. What is Dynamic Application Security Testing (DAST)?
+
+467. What is dependency scanning?
+
+468. What is mutual TLS (mTLS), and where is it commonly used?
+
+469. What are the common security risks in cloud infrastructure?
+
+470. What security checks would you perform before deploying an application to production?
+
+471. How do you determine whether the issue is with the application, infrastructure, or network?
+
+472. Users report intermittent application failures. How would you investigate?
+
+473. CPU usage suddenly spikes to 100% on multiple servers. How would you investigate?
+
+474. Disk usage reaches 100% on a production server. What immediate actions would you take?
+
+475. Users receive HTTP 502 Bad Gateway responses. What components would you inspect?
+
+476. An application experiences high latency. How would you identify the bottleneck?
+
+477. Database connections are being exhausted. What could cause this?
+
+478. SSL/TLS certificates expire unexpectedly. How would you prevent this in the future?
+
+479. CloudWatch reports a sudden increase in error rates. How would you investigate?
+
+480. How would you perform a root cause analysis (RCA) after a production incident?
+
+481. What information should be included in a postmortem report?
+
+482. How do you prioritize multiple production incidents occurring simultaneously?
+
+483. What strategies help reduce Mean Time to Detection (MTTD) and Mean Time to Recovery (MTTR)?
+
+484. How do you conduct an effective on-call handoff?
+
+485. Describe a production incident you handled and the lessons learned.
+
+486. What practices help prevent the same production issue from recurring?
+
+487. Design a highly available web application capable of serving millions of users.
+
+488. Design a monitoring and alerting platform for a large organization.
+
+489. How would you design a disaster recovery solution for a cloud-native application?
+
+490. How would you design a platform capable of supporting multiple development teams with shared infrastructure?
+
+491. Describe a challenging production issue you resolved and how you approached it.
+
+492. Describe a situation where automation significantly improved a team's productivity.
+
+493. Have you ever disagreed with a developer or operations engineer? How did you resolve the disagreement?
+
+494. How do you prioritize tasks when managing multiple critical issues simultaneously?
+
+495. Describe a situation where you had to learn a new technology quickly to solve a problem.
+
+496. What are SUID, SGID, and the Sticky Bit, and when would you use each?
+
+497. Explain the difference between ext4, XFS, and Btrfs.
+
+498. What are Custom Resource Definitions (CRDs)?
+
+499. What are Finalizers?
+
+500. What are Helm dependencies?
+
