@@ -11,6 +11,7 @@ load_dotenv()
 groq_api=os.getenv("GROQ_API")
 
 def intro_RAG(state:GuideState) -> GuideState:
+    print("------ INTRODUCTION NODE ------")
     llm=ChatGroq(model="llama-3.3-70b-versatile", api_key=groq_api)
     prompt=PromptTemplate.from_template(
     """ You are an expert career advisor and technical writer.

@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 api_key=os.getenv("GROQ_API")
 
 def merge(state:GuideState) -> GuideState:
+    print("------ MERGE NODE ------")
     prompt=f"""
     You are an expert Career Guide Generator below are given the different 
     sections of the guide you have to merge them structurally with sequence:

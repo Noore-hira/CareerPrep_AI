@@ -12,6 +12,7 @@ from reportlab.platypus import (
 
 
 def pdf_generator_node(state:GuideState) -> GuideState:
+    print("------ PDF NODE ------")
 
     role = state.role
     markdown = state.merge_response

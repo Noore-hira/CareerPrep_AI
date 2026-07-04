@@ -11,6 +11,7 @@ load_dotenv()
 groq_api=os.getenv("GROQ_API")
 
 def interview_RAG(state:GuideState) -> GuideState:
+    print("------ INTERVIEW QUESTIONS NODE ------")
     llm=ChatGroq(model="llama-3.3-70b-versatile", api_key=groq_api)
     prompt=PromptTemplate.from_template(
         """

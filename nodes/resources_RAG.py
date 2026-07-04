@@ -12,6 +12,8 @@ groq_api=os.getenv("GROQ_API")
 
 def resources_RAG(state:GuideState)-> GuideState:
 
+    print("------ RESOURCES NODE ------")
+
     llm=ChatGroq(model="llama-3.3-70b-versatile", api_key=groq_api)
     prompt=PromptTemplate.from_template(
         """

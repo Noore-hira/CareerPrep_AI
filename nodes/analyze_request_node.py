@@ -91,6 +91,7 @@ SUPPORTED_ROLES = {
 }
 
 def analyze_request_node(state: GuideState):
+    print("------ ANALYZE REQUEST NODE ------")
 
     result = analysis_chain.invoke(
         {
