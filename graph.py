@@ -41,3 +41,10 @@ graph.add_edge("Interview_Questions_Section_Generation", "Merge_Sections")
 graph.add_edge("Resume_Tips_Section_Generation", "Merge_Sections")
 graph.add_edge("Merge_Sections", "PDF")
 graph.add_edge("PDF", END)
+guide_graph=graph.compile()
+
+png=guide_graph.get_graph().draw_mermaid_png()
+with open("langgraph.png", "wb") as f:
+    f.write(png)
+
+print("Graph saved as langgraph.png")

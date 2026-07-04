@@ -1,10 +1,10 @@
 from langchain_groq import ChatGroq
 from state_schema import GuideState
-from interview_RAG import interview_RAG
-from introduction_RAG import intro_RAG
-from resources_RAG import resources_RAG
-from roadmap_RAG import rm_RAG
-from projects_RAG import projects_RAG
+from nodes.interview_RAG import interview_RAG
+from nodes.introduction_RAG import intro_RAG
+from nodes.resources_RAG import resources_RAG
+from nodes.roadmap_RAG import rm_RAG
+from nodes.projects_RAG import projects_RAG
 import os
 from dotenv import load_dotenv
 

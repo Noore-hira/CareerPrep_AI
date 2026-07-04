@@ -4,6 +4,11 @@ from state_schema import GuideState
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+groq_api=os.getenv("GROQ_API")
 
 
 class RequestAnalysis(BaseModel):
@@ -18,7 +23,8 @@ class RequestAnalysis(BaseModel):
 
 llm = ChatGroq(
     model="llama-3.3-70b-versatile",
-    temperature=0
+    temperature=0,
+    api_key=groq_api
 )
 
 structured_llm = llm.with_structured_output(RequestAnalysis)
