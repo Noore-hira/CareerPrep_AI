@@ -9,9 +9,13 @@ from nodes.merge import merge
 from nodes.PDF_generator import pdf_generator_node
 from langgraph.graph import START,END,StateGraph
 
+def parallel_start(state: GuideState):
+    return {}
+
 graph= StateGraph(GuideState)
 
 graph.add_node("Analyze_request",analyze_request_node)
+graph.add_node("Parallel_Start", parallel_start)
 graph.add_node("Introduction_Section_Generation",intro_RAG)
 graph.add_node("Roadmap_Section_Generation",rm_RAG)
 graph.add_node("Resources_Section_Generation",resources_RAG)
@@ -25,15 +29,15 @@ graph.add_conditional_edges(
     "Analyze_request",
     analyze_router,
     {
-        "continue": "Introduction_Section_Generation",
+        "continue": "Parallel_Start",
         END: END,
     },
 )
-graph.add_edge("Analyze_request", "Introduction_Section_Generation")
-graph.add_edge("Analyze_request", "Roadmap_Section_Generation")
-graph.add_edge("Analyze_request", "Resources_Section_Generation")
-graph.add_edge("Analyze_request", "Interview_Questions_Section_Generation")
-graph.add_edge("Analyze_request", "Resume_Tips_Section_Generation")
+graph.add_edge("Parallel_Start", "Introduction_Section_Generation")
+graph.add_edge("Parallel_Start", "Roadmap_Section_Generation")
+graph.add_edge("Parallel_Start", "Resources_Section_Generation")
+graph.add_edge("Parallel_Start", "Interview_Questions_Section_Generation")
+graph.add_edge("Parallel_Start", "Resume_Tips_Section_Generation")
 graph.add_edge("Introduction_Section_Generation", "Merge_Sections")
 graph.add_edge("Roadmap_Section_Generation", "Merge_Sections")
 graph.add_edge("Resources_Section_Generation", "Merge_Sections")
@@ -43,10 +47,11 @@ graph.add_edge("Merge_Sections", "PDF")
 graph.add_edge("PDF", END)
 guide_graph=graph.compile()
 
-#png=guide_graph.get_graph().draw_mermaid_png()
-#with open("langgraph.png", "wb") as f:
-#    f.write(png)
+png=guide_graph.get_graph().draw_mermaid_png()
+with open("langgraph.png", "wb") as f:
+    f.write(png)
 
-#print("Graph saved as langgraph.png")
+print("Graph saved as langgraph.png")
 
-guide_graph.invoke({"question":"create end to end career guide for Ai Engineer"})
+result=guide_graph.invoke({"question":"tell me a joke"})
+print(result)
