@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 groq_api=os.getenv("GROQ_API")
 
-def interview_RAG(state:GuideState) -> GuideState:
+def interview_RAG(state:GuideState):
     print("------ INTERVIEW QUESTIONS NODE ------")
     llm=ChatGroq(model="llama-3.3-70b-versatile", api_key=groq_api)
     prompt=PromptTemplate.from_template(
@@ -81,5 +81,7 @@ def interview_RAG(state:GuideState) -> GuideState:
 
     document_chain=create_stuff_documents_chain(llm,prompt)
     retrieval_chain=create_retrieval_chain(intrerview_retriever,document_chain)
-    result=retrieval_chain.invoke({"input": "give me interview question for DevOps engineering" ,"role":"DevOps engineer"})
-    return state.model_copy(update={"iv_response": result["answer"]})
+    result=retrieval_chain.invoke({"input": state.question ,"role":state.role})
+    return {
+        "iv_response": result["answer"]
+    }

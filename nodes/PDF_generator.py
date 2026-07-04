@@ -11,7 +11,7 @@ from reportlab.platypus import (
 )
 
 
-def pdf_generator_node(state:GuideState) -> GuideState:
+def pdf_generator_node(state:GuideState):
     print("------ PDF NODE ------")
 
     role = state.role
@@ -111,4 +111,4 @@ def pdf_generator_node(state:GuideState) -> GuideState:
 
     doc.build(story)
 
-    return state.model_copy(update={"pdf_path": str(pdf_path)})
+    return {"pdf_path": str(pdf_path)}

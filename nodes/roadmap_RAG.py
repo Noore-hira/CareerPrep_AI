@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 groq_api=os.getenv("GROQ_API")
 
-def rm_RAG(state:GuideState) -> GuideState:
+def rm_RAG(state:GuideState):
 
     print("------ ROADMAP NODE ------")
 
@@ -71,5 +71,7 @@ def rm_RAG(state:GuideState) -> GuideState:
 
     document_chain=create_stuff_documents_chain(llm,prompt)
     retrieval_chain=create_retrieval_chain(roadmap_retriever,document_chain)
-    result=retrieval_chain.invoke({"input": "give me roadmap of AI engineer step by step" ,"role":"AI engineer"})
-    return state.model_copy(update={"rm_response":result["answer"]})
+    result=retrieval_chain.invoke({"input": state.question ,"role":state.role})
+    return {
+        "rm_response": result["answer"]
+    }

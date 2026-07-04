@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 groq_api=os.getenv("GROQ_API")
 
-def resources_RAG(state:GuideState)-> GuideState:
+def resources_RAG(state:GuideState):
 
     print("------ RESOURCES NODE ------")
 
@@ -68,5 +68,7 @@ def resources_RAG(state:GuideState)-> GuideState:
 
     document_chain=create_stuff_documents_chain(llm,prompt)
     retrieval_chain=create_retrieval_chain(resources_retriever,document_chain)
-    result=retrieval_chain.invoke({"input": "give different resources for learning AI engineering" ,"role":"AI engineer"})
-    return state.model_copy(update={"rcs_response":result["answer"]})
+    result=retrieval_chain.invoke({"input": state.question ,"role":state.role})
+    return {
+        "rcs_response": result["answer"]
+    }

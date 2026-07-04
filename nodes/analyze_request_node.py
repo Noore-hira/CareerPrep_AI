@@ -165,7 +165,7 @@ def analyze_request_node(state: GuideState):
 
 def analyze_router(state: GuideState):
 
-    if state["continue_pipeline"]:
-        return "retrievers"
+    if state.continue_pipeline:
+        return "continue"
 
     return END

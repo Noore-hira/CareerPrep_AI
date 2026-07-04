@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 groq_api=os.getenv("GROQ_API")
 
-def intro_RAG(state:GuideState) -> GuideState:
+def intro_RAG(state:GuideState):
     print("------ INTRODUCTION NODE ------")
     llm=ChatGroq(model="llama-3.3-70b-versatile", api_key=groq_api)
     prompt=PromptTemplate.from_template(
@@ -65,5 +65,7 @@ def intro_RAG(state:GuideState) -> GuideState:
 
     document_chain=create_stuff_documents_chain(llm,prompt)
     retrieval_chain=create_retrieval_chain(intro_retriever,document_chain)
-    result=retrieval_chain.invoke({"input": state.question ,"role":"AI engineer"})
-    return state.model_copy(update={"intro_response":result["answer"]})
+    result=retrieval_chain.invoke({"input": state.question ,"role":state.role})
+    return {
+        "intro_response": result["answer"]
+    }

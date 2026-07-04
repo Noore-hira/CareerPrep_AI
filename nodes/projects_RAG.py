@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 groq_api=os.getenv("GROQ_API")
 
-def projects_RAG(state:GuideState) -> GuideState:
+def projects_RAG(state:GuideState):
 
     print("------ PROJECTS NODE ------")
 
@@ -85,5 +85,7 @@ def projects_RAG(state:GuideState) -> GuideState:
 
     document_chain=create_stuff_documents_chain(llm,prompt)
     retrieval_chain=create_retrieval_chain(projects_retriever,document_chain)
-    result=retrieval_chain.invoke({"input": "give me different project ideas for Software Engineering role" ,"role":"Software engineer"})
-    return state.model_copy(update={"pj_response": result["answer"]})
+    result=retrieval_chain.invoke({"input": state.question ,"role":state.role})
+    return {
+        "pj_response": result["answer"]
+    }
