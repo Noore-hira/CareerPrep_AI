@@ -2,7 +2,9 @@ from pydantic import BaseModel
 
 class GuideState(BaseModel):
     question:str 
-    role: str =""
+    role: str | None 
+    continue_pipeline :bool
+    response : str = ""
     intro_refined_ques:str =""
     rcs_refined_ques:str =""
     rm_refined_ques:str=""
