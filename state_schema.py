@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 class GuideState(BaseModel):
     question:str 
+    role: str =""
     intro_refined_ques:str =""
     rcs_refined_ques:str =""
     rm_refined_ques:str=""
@@ -12,3 +13,5 @@ class GuideState(BaseModel):
     rm_response:str=""
     iv_response:str=""
     pj_response:str=""
+    merge_response:str=""
+    pdf_path: str = ""
