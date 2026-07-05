@@ -53,5 +53,5 @@ with open("langgraph.png", "wb") as f:
 
 print("Graph saved as langgraph.png")
 
-result=guide_graph.invoke({"question":"tell me a joke"})
-print(result)
+result=guide_graph.invoke({"question":"give me end to end Software engineer career guide"})
+#print(result)
