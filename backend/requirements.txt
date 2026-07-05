@@ -1,0 +1,12 @@
+langchain-community
+langchain-astradb
+langchain-text-splitters
+langchain-huggingface
+langchain-groq
+langchain-core
+sentence-transformers
+PyMuPDF
+langgraph
+reportlab
+fastapi
+uvicorn
