@@ -4,25 +4,15 @@ from app.graph import guide_graph
 class GuideService:
 
     @staticmethod
-    def generate(question: str):
-
-        result = guide_graph.invoke({
-            "question": question
-        })
-
-        print(result)
-
-        if not result.get("continue_pipeline", True):
-            return {
-                "status": "failed",
-                "role": None,
-                "response": result.get("response"),
-                "pdf_path": None,
+    def generate(
+        question: str,
+        model: str,
+        api_key: str,
+    ):
+        return guide_graph.invoke(
+            {
+                "question": question,
+                "model": model,
+                "api_key": api_key,
             }
-
-        return {
-            "status": "success",
-            "role": result.get("role"),
-            "response": result.get("merge_response"),
-            "pdf_path": result.get("pdf_path"),
-        }
+        )

@@ -1,46 +1,86 @@
 from typing import Literal
+
 from pydantic import BaseModel, Field
-from app.state_schema import GuideState
 from langchain_groq import ChatGroq
+from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END
+
+from app.state_schema import GuideState
 from app.prompts.prompts import analysis_prompt
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
-groq_api=os.getenv("GROQ_API")
 
+
+###############################################################################
+# Structured Output Schema
+###############################################################################
 
 class RequestAnalysis(BaseModel):
-    intent: Literal["career_guide", "unsupported"] = Field(
-        description="Whether the user is requesting a complete career guide."
+
+    intent: Literal[
+        "career_guide",
+        "unsupported"
+    ] = Field(
+        description="Whether the user wants a complete career preparation guide."
     )
 
-    role: str | None = Field(
+
+    role: Literal[
+        "AI Engineer",
+        "Data Engineer",
+        "Software Engineer",
+        "FullStack Developer",
+        "DevOps Engineer",
+        None
+    ] = Field(
         default=None,
-        description="Requested career role if present."
+        description=(
+            "Canonical supported career role. "
+            "Must exactly match one of the supported roles."
+        )
     )
 
-llm = ChatGroq(
-    model="openai/gpt-oss-120b",
-    temperature=0,
-    api_key=groq_api
-)
 
-structured_llm = llm.with_structured_output(RequestAnalysis)
 
-analysis_chain = analysis_prompt | structured_llm
+###############################################################################
+# Supported Roles
+###############################################################################
 
 SUPPORTED_ROLES = {
     "AI Engineer",
     "Data Engineer",
     "Software Engineer",
-    "Full Stack Developer",
+    "FullStack Developer",
     "DevOps Engineer",
 }
 
+
+
+###############################################################################
+# Analyze Request Node
+###############################################################################
+
 def analyze_request_node(state: GuideState):
+
     print("------ ANALYZE REQUEST NODE ------")
+
+
+    llm = ChatGroq(
+        model=state.model,
+        api_key=state.api_key,
+        temperature=0,
+    )
+
+
+    structured_llm = llm.with_structured_output(
+        RequestAnalysis
+    )
+
+
+    analysis_chain = (
+        analysis_prompt 
+        | structured_llm
+    )
+
 
     result = analysis_chain.invoke(
         {
@@ -48,32 +88,43 @@ def analyze_request_node(state: GuideState):
         }
     )
 
-    # ----------------------------
+
+    print("LLM CLASSIFICATION:")
+    print(result)
+
+
+
+    ###########################################################################
     # Not a Career Guide Request
-    # ----------------------------
+    ###########################################################################
 
     if result.intent == "unsupported":
 
         return {
+
             "continue_pipeline": False,
 
             "response": (
                 "CareerPrep AI is designed to generate complete career "
                 "preparation guides.\n\n"
+
                 "Currently supported roles are:\n"
                 "- AI Engineer\n"
                 "- Data Engineer\n"
                 "- Software Engineer\n"
-                "- Full Stack Developer\n"
+                "- FullStack Developer\n"
                 "- DevOps Engineer\n\n"
+
                 "Example:\n"
                 "'Generate a complete career guide for AI Engineer.'"
             )
         }
 
-    # ----------------------------
-    # Unsupported Role
-    # ----------------------------
+
+
+    ###########################################################################
+    # Role Validation
+    ###########################################################################
 
     if result.role not in SUPPORTED_ROLES:
 
@@ -83,28 +134,38 @@ def analyze_request_node(state: GuideState):
 
             "response": (
                 f"'{result.role}' is currently not supported.\n\n"
+
                 "CareerPrep AI currently supports:\n"
                 "- AI Engineer\n"
                 "- Data Engineer\n"
                 "- Software Engineer\n"
-                "- Full Stack Developer\n"
+                "- FullStack Developer\n"
                 "- DevOps Engineer"
             )
         }
 
-    # ----------------------------
+
+
+    ###########################################################################
     # Success
-    # ----------------------------
+    ###########################################################################
 
     return {
 
         "continue_pipeline": True,
 
+        # IMPORTANT:
+        # This value exactly matches vector DB metadata
         "role": result.role,
 
         "response": ""
     }
 
+
+
+###############################################################################
+# Router
+###############################################################################
 
 def analyze_router(state: GuideState):
 

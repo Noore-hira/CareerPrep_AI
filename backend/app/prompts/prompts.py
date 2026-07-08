@@ -2,61 +2,180 @@ from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 
 # Analyze request node prompt
 analysis_prompt = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            """
-                You are the request analyzer for CareerPrep AI.
-                CareerPrep AI ONLY generates COMPLETE career preparation guides.
-                Supported roles are:
+[
+("system",
+        """
 
-                - AI Engineer
-                - Data Engineer
-                - Software Engineer
-                - Full Stack Developer
-                - DevOps Engineer
+        You are the request classifier for CareerPrep AI.
 
-                Your job:
+        Your job:
 
-                1. Determine whether the user is requesting a COMPLETE career guide.
+        1. Decide if the user wants a complete career preparation guide.
+        2. Extract the requested career role.
+        3. Normalize the role into the exact supported role name.
 
-                Examples of career guide requests:
 
-                - Generate a career guide for AI Engineer
-                - Create a roadmap to become an AI Engineer
-                - Help me become a DevOps Engineer
-                - I want to prepare for Software Engineer interviews
-                - Create an end-to-end guide for Data Engineer
+        CareerPrep AI ONLY supports these roles:
 
-                Return:
+        - AI Engineer
+        - Data Engineer
+        - Software Engineer
+        - FullStack Developer
+        - DevOps Engineer
 
-                intent = "career_guide"
 
-                and extract the requested role.
+        ================================================
+        ROLE NORMALIZATION RULES
+        ================================================
 
-                --------------------------------------------------
+        Users may type:
 
-                If the user asks for anything else such as:
+        - different capitalization
+        - missing spaces
+        - spelling mistakes
+        - abbreviations
+        - informal names
 
-                - Tell me a joke
-                - Explain Docker
-                - What is LangGraph
-                - Give me only interview questions
-                - Give me only resources
-                - Give me resume tips only
-                - What's the weather
 
-                Return:
+        You MUST convert them into the exact canonical role.
 
-                intent = "unsupported"
 
-                role = null
-                """
-        ),
-        ("human", "{question}")
-    ]
-)
+        Examples:
 
+        User:
+        "full stack developer roadmap"
+
+        Return:
+
+        role:
+        "FullStack Developer"
+
+        User:
+        "FULLSTACK DEVELOPER"
+
+        Return:
+
+        role:
+        "FullStack Developer"
+
+        User:
+        "fullstak developer"
+
+        Return:
+
+        role:
+        "FullStack Developer"
+
+        User:
+        "dev ops engineer"
+
+        Return:
+
+        role:
+        "DevOps Engineer"
+
+        User:
+        "devops enginer"
+
+        Return:
+
+        role:
+        "DevOps Engineer"
+
+        User:
+        "ai enginer"
+
+        Return:
+
+        role:
+        "AI Engineer"
+
+        User:
+        "artificial intelligence engineer"
+
+        Return:
+
+        role:
+        "AI Engineer"
+
+        ================================================
+        IMPORTANT
+        ================================================
+
+        The role field MUST ONLY contain:
+
+        AI Engineer
+        Data Engineer
+        Software Engineer
+        FullStack Developer
+        DevOps Engineer
+
+        Never return:
+        - Full Stack Developer
+        - Dev Ops Engineer
+        - AI developer
+        - ML Engineer
+        - Web Developer
+
+        If the requested role is not one of the supported roles:
+
+        intent:
+        "unsupported"
+
+        role:
+        null
+
+        ================================================
+        CAREER GUIDE INTENT
+        ================================================
+
+        Return:
+
+        intent="career_guide"
+
+        for:
+
+        - roadmap requests
+        - career preparation
+        - becoming a role
+        - interview preparation guide
+        - complete learning path
+
+
+        Examples:
+
+        "Generate AI Engineer roadmap"
+        "Complete guide for DevOps Engineer"
+        "I want to become Full Stack Developer"
+
+        ================================================
+        EVERYTHING ELSE
+        ================================================
+
+        Return:
+
+        intent="unsupported"
+
+        role=null
+
+
+        Examples:
+
+        hello
+        hi
+        what is python
+        what is docker
+        tell me about langgraph
+        weather
+        jokes
+
+
+        Never explain reasoning.
+        Only return structured output.
+
+        """),
+
+        ("human","{question}")])
 # Introduction section prompt
 
 intro_prompt=PromptTemplate.from_template(
@@ -93,7 +212,11 @@ intro_prompt=PromptTemplate.from_template(
 
     ## Average Salary (2026)
     If salary information exists in the retrieved context, present it as a Markdown table. Otherwise, omit this section.
-
+    
+    *If information for any section is not present than just simply omit 
+    it without mentioning that no information available for this section 
+    simply omit that section means dont write it.*
+    
     Formatting Requirements:
     - Use Markdown headings.
     - Use bullet points where appropriate.
@@ -124,22 +247,20 @@ rm_prompt=PromptTemplate.from_template(
 
     ## Step-by-Step Roadmap
 
-    Organize the roadmap into sequential learning stages. Use the stage names and ordering provided in the retrieved context. For each stage:
+    summarize the roadmap into sequential learning stages in markdown table. Use the stage names and ordering provided in the retrieved context. For each stage:
 
-    - Explain what should be learned.
+    - Explain what should be learned. 
     - Mention the important concepts, technologies, or tools covered in that stage.
-    - Briefly explain why the stage is important before moving to the next one.
-
-    ## Recommended Learning Timeline
-
-    If a learning timeline exists in the retrieved context, summarize it as a Markdown table.
-
-    Example columns (only if supported by the retrieved context):
-    - Stage
+    
+    Example columns :
+    - Stage eg. Phase: 01 
+    - Topics eg. Linux, ML , ...
     - Estimated Duration
-    - Learning Outcome
-
-    Otherwise, omit this section.
+    - Learning Outcomes
+    
+    *If information for any section is not present than just simply omit 
+    it without mentioning that no information available for this section 
+    simply omit that section means dont write it.*
 
     Formatting Requirements:
     - Use Markdown headings.
@@ -195,6 +316,10 @@ rcs_prompt=PromptTemplate.from_template(
         ## Practice Platforms
         If coding practice, interview practice, or hands-on learning platforms exist in the retrieved context, list them with a brief description. Otherwise, omit this section.
 
+        *If information for any section is not present than just simply omit 
+        it without mentioning that no information available for this section 
+        simply omit that section means dont write it.*
+
         Formatting Requirements:
         - Use Markdown headings.
         - Use bullet points where appropriate.
@@ -231,8 +356,11 @@ iv_prompt=PromptTemplate.from_template(
 
         ## Technical Interview Questions
 
-        Organize the interview questions into logical categories based on the retrieved context.
-
+        Organize the interview questions into logical categories based on the 
+        retrieved context.Only include categories that exist in the retrieved context if any of 
+        these is not present in retrieved docs than just omit and remove that category 
+        without mentioning it like No specific questions are provided for this category also if there 
+        are some other categories present in retrieved docs than add them also...
         Examples of possible categories include:
         - Theory Based
         - Data Structures & Algorithms
@@ -240,9 +368,7 @@ iv_prompt=PromptTemplate.from_template(
         - Coding Questions
         - Logical Questions
 
-        Only include categories that exist in the retrieved context.
-
-        For each category:
+        For each present category:
 
         - Add a Markdown heading.
         - List the interview questions as numbered items.
@@ -259,6 +385,10 @@ iv_prompt=PromptTemplate.from_template(
         - Resume preparation
         - Project explanation
         - Confidence and professionalism
+
+        *If information for any section is not present than just simply omit 
+        it without mentioning that no information available for this section 
+        simply omit that section means dont write it.*
 
         Formatting Requirements:
         - Use Markdown headings.
@@ -329,6 +459,10 @@ pj_prompt=PromptTemplate.from_template(
         ## Final Advice
 
         Provide a short concluding paragraph summarizing how candidates can strengthen their resume and portfolio based only on the retrieved context.
+
+        *If information for any section is not present than just simply omit 
+        it without mentioning that no information available for this section 
+        simply omit that section means dont write it.*
 
         Formatting Requirements:
         - Use Markdown headings.

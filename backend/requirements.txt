@@ -10,3 +10,4 @@ langgraph
 reportlab
 fastapi
 uvicorn
+langchain-google-genai
