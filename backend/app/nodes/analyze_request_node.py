@@ -2,12 +2,11 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 from langchain_groq import ChatGroq
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import Runnable
 from langgraph.graph import END
 
 from app.state_schema import GuideState
 from app.prompts.prompts import analysis_prompt
-
 
 
 ###############################################################################
@@ -56,6 +55,51 @@ SUPPORTED_ROLES = {
 
 
 ###############################################################################
+# Lazy LLM Cache
+###############################################################################
+
+_analysis_chains = {}
+
+
+
+def get_analysis_chain(model: str, api_key: str) -> Runnable:
+    """
+    Creates analysis chain only when needed.
+    Reuses it for future requests.
+    """
+
+    cache_key = model
+
+    if cache_key not in _analysis_chains:
+
+        print("Creating Analyze Request LLM chain...")
+
+        llm = ChatGroq(
+            model=model,
+            api_key=api_key,
+            temperature=0,
+        )
+
+
+        structured_llm = llm.with_structured_output(
+            RequestAnalysis
+        )
+
+
+        _analysis_chains[cache_key] = (
+            analysis_prompt
+            |
+            structured_llm
+        )
+
+        print("Analyze chain ready")
+
+
+    return _analysis_chains[cache_key]
+
+
+
+###############################################################################
 # Analyze Request Node
 ###############################################################################
 
@@ -64,21 +108,9 @@ def analyze_request_node(state: GuideState):
     print("------ ANALYZE REQUEST NODE ------")
 
 
-    llm = ChatGroq(
-        model=state.model,
-        api_key=state.api_key,
-        temperature=0,
-    )
-
-
-    structured_llm = llm.with_structured_output(
-        RequestAnalysis
-    )
-
-
-    analysis_chain = (
-        analysis_prompt 
-        | structured_llm
+    analysis_chain = get_analysis_chain(
+        state.model,
+        state.api_key
     )
 
 
@@ -93,10 +125,6 @@ def analyze_request_node(state: GuideState):
     print(result)
 
 
-
-    ###########################################################################
-    # Not a Career Guide Request
-    ###########################################################################
 
     if result.intent == "unsupported":
 
@@ -122,10 +150,6 @@ def analyze_request_node(state: GuideState):
 
 
 
-    ###########################################################################
-    # Role Validation
-    ###########################################################################
-
     if result.role not in SUPPORTED_ROLES:
 
         return {
@@ -146,16 +170,10 @@ def analyze_request_node(state: GuideState):
 
 
 
-    ###########################################################################
-    # Success
-    ###########################################################################
-
     return {
 
         "continue_pipeline": True,
 
-        # IMPORTANT:
-        # This value exactly matches vector DB metadata
         "role": result.role,
 
         "response": ""

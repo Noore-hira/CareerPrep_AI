@@ -1,4 +1,4 @@
-from app.graph import guide_graph
+from app.graph import get_graph
 
 
 class GuideService:
@@ -9,6 +9,10 @@ class GuideService:
         model: str,
         api_key: str,
     ):
+
+        # Lazy load graph only when API is called
+        guide_graph = get_graph()
+
         return guide_graph.invoke(
             {
                 "question": question,
