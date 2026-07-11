@@ -36,78 +36,192 @@ export function HomePage({
   const isLoading = localLoading;
 
   const handleGenerate = async () => {
+
     if (!prompt.trim() || isLoading) return;
+
 
     setLocalLoading(true);
     setLocalError(null);
     setConversationalReply(null);
 
+
+
     try {
-      const apiKey = localStorage.getItem("groq_api_key") || "";
-      const model = localStorage.getItem("groq_model") || "";
+
+      const apiKey =
+        localStorage.getItem("groq_api_key") || "";
+
+
+      const model =
+        localStorage.getItem("groq_model") ||
+        "llama-3.3-70b-versatile";
+
+
+
+      console.log(
+        "Groq API Key:",
+        apiKey
+          ? apiKey.substring(0, 10) + "..."
+          : "EMPTY"
+      );
+
 
       if (!apiKey) {
+
         setLocalError(
           "Please add your Groq API Key from the sidebar before generating a guide."
         );
+
         return;
+
       }
 
-      const response = await api.post("/guide/generate", {
-        question: prompt.trim(),
-        provider: "groq",
-        api_key: apiKey,
-        model,
-      });
+
+
+      const response = await api.post(
+        "/guide/generate",
+        {
+
+          question: prompt.trim(),
+
+          api_key: apiKey,
+
+          model: model,
+
+        }
+      );
+
+
 
       if (response.data?.status === "stopped") {
-        setConversationalReply(response.data.response);
-      } else if (response.data?.status === "success") {
+
+
+        setConversationalReply(
+          response.data.response
+        );
+
+
+      } 
+
+
+      else if (response.data?.status === "success") {
+
+
+
+        const pdfUrl =
+          response.data.pdf_path
+
+          ? `${import.meta.env.VITE_API_URL}/guide/download/${response.data.pdf_path}`
+
+          : "";
+
+
+
         onGuideReady({
-          role: response.data.role,
-          content: response.data.response,
-          pdfUrl: response.data.pdf_path,
+
+          role:
+            response.data.role ||
+            "AI Engineer",
+
+
+          content:
+            response.data.response,
+
+
+          pdfUrl,
+
         });
-      } else {
-        setLocalError(response.data?.message || "Guide generation failed.");
+
+
+
+      } 
+
+
+      else {
+
+
+        setLocalError(
+          response.data?.message ||
+          "Guide generation failed."
+        );
+
+
       }
-    } catch (err: any) {
+
+
+
+    } 
+
+
+    catch (err: any) {
+
+
       console.error(err);
 
+
+
       if (err.response) {
+
+
         const message =
           err.response.data?.detail ||
           err.response.data?.message ||
           err.response.data?.error ||
           "";
 
+
+
         if (
-          message.toLowerCase().includes("rate limit") ||
-          message.toLowerCase().includes("token") ||
-          message.includes("429")
+          message
+            .toLowerCase()
+            .includes("api key")
         ) {
+
+
           setLocalError(
-            "⚠️ You have reached the AI model token limit. Please wait a minute and try again."
+            "⚠️ Invalid Groq API key."
           );
-        } else if (
-          message.toLowerCase().includes("api key") ||
-          message.toLowerCase().includes("unauthorized") ||
-          message.includes("401")
-        ) {
-          setLocalError("⚠️ Invalid API key.");
-        } else {
-          setLocalError(message || "An unexpected error occurred.");
+
+
+        } 
+
+        else {
+
+
+          setLocalError(
+            message ||
+            "An unexpected error occurred."
+          );
+
+
         }
-      } else if (err.code === "ECONNABORTED") {
-        setLocalError("⏳ The request timed out. Please try again.");
-      } else if (err.code === "ERR_NETWORK") {
-        setLocalError("🚫 Cannot connect to the backend server.");
-      } else {
-        setLocalError(err.message || "Unknown error.");
+
+
+      } 
+
+
+      else {
+
+
+        setLocalError(
+          "🚫 Cannot connect to backend."
+        );
+
+
       }
-    } finally {
+
+
+    } 
+
+
+    finally {
+
+
       setLocalLoading(false);
+
+
     }
+
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
