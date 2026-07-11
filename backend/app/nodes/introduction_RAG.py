@@ -28,7 +28,7 @@ def get_intro_retriever(role: str):
         api_endpoint=os.getenv("ASTRA_DB_API_ENDPOINT"),
         token=os.getenv("ASTRA_DB_APPLICATION_TOKEN"),
         role=role,
-        k=8,
+        k=10,
     )
 
 

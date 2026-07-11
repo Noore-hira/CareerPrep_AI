@@ -437,6 +437,30 @@ def pdf_generator_node(
             i += 1
 
             continue
+        
+        if re.match(
+            r"^#{3}(?!#)\s+",
+            line
+        ):
+
+            title = re.sub(
+                r"^#{3}\s+",
+                "",
+                line
+            )
+
+
+            story.append(
+                Paragraph(
+                    markdown_to_reportlab(title),
+                    styles["Heading3"]
+                )
+            )
+
+
+            i += 1
+
+            continue
 
 
 

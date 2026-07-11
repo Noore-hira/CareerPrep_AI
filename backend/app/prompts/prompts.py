@@ -363,7 +363,6 @@ iv_prompt=PromptTemplate.from_template(
         are some other categories present in retrieved docs than add them also...
         Examples of possible categories include:
         - Theory Based
-        - Data Structures & Algorithms
         - Behavioral Questions
         - Coding Questions
         - Logical Questions
