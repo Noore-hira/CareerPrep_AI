@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 import re
 import textwrap
 
@@ -17,28 +18,32 @@ from reportlab.platypus import (
 )
 
 
+# =====================================================
+# PDF STORAGE LOCATION
+# Compatible with OpenShift / Docker containers
+# =====================================================
+
+GENERATED_GUIDES_DIR = Path(
+    os.getenv(
+        "GENERATED_GUIDES_DIR",
+        "/tmp/generated_guides"
+    )
+)
+
+
+GENERATED_GUIDES_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+
 ###############################################################################
 # Markdown Helpers
 ###############################################################################
 
 def clean_markdown(text: str) -> str:
-    """
-    Clean LLM generated markdown before PDF conversion.
 
-    Fixes:
-    - unwanted indentation before headings
-    - broken markdown headings
-    - excessive blank lines
-    """
-
-    # Remove common indentation
     text = textwrap.dedent(text)
-
-    # Remove spaces before markdown headings
-    # Example:
-    # "        # Introduction"
-    # becomes:
-    # "# Introduction"
 
     text = re.sub(
         r"^\s+(#{1,6}\s+)",
@@ -47,7 +52,6 @@ def clean_markdown(text: str) -> str:
         flags=re.MULTILINE
     )
 
-    # Normalize multiple empty lines
     text = re.sub(
         r"\n{3,}",
         "\n\n",
@@ -59,65 +63,63 @@ def clean_markdown(text: str) -> str:
 
 
 def markdown_to_reportlab(text: str) -> str:
-    """
-    Convert Markdown inline formatting into ReportLab XML.
-    """
 
-    # Escape XML characters safely
     text = (
         text.replace("&", "&amp;")
             .replace("<", "&lt;")
             .replace(">", "&gt;")
     )
 
-    # Bold
+
     text = re.sub(
         r"\*\*(.*?)\*\*",
         r"<b>\1</b>",
         text
     )
 
-    # Italic
+
     text = re.sub(
         r"\*(.*?)\*",
         r"<i>\1</i>",
         text
     )
 
+
     return text
 
 
 
 def build_markdown_table(table_lines):
-    """
-    Convert markdown table into responsive ReportLab table.
-    """
+
     styles = getSampleStyleSheet()
 
-    # 1. Configure the body cell style safely
+
     cell_style = styles["BodyText"]
+
     cell_style.fontSize = 8.5
     cell_style.leading = 10
-    cell_style.textColor = colors.black  # Explicitly guarantee body text is black
-    
+    cell_style.textColor = colors.black
+
+
+
     header_style = ParagraphStyle(
-        'TableHeaderStyle',
-        parent=styles['BodyText'],
-        fontName='Helvetica-Bold',
+        "TableHeaderStyle",
+        parent=styles["BodyText"],
+        fontName="Helvetica-Bold",
         fontSize=9,
         leading=11,
         textColor=colors.white
     )
 
+
     rows = []
 
-    for line in table_lines:
 
+    for line in table_lines:
 
         line = line.strip()
 
 
-        # Skip markdown separator
         if re.match(
             r"^\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)+\|?$",
             line
@@ -125,12 +127,14 @@ def build_markdown_table(table_lines):
             continue
 
 
-
         cells = [
+
             markdown_to_reportlab(cell.strip())
             if cell.strip()
             else " "
+
             for cell in line.strip("|").split("|")
+
         ]
 
 
@@ -139,20 +143,17 @@ def build_markdown_table(table_lines):
 
 
     if not rows:
+
         return Spacer(1,0)
 
 
 
-    ###################################################################
-    # Convert strings -> Paragraph
-    ###################################################################
-
     formatted_rows = []
 
 
-    for row_index,row in enumerate(rows):
+    for row_index, row in enumerate(rows):
 
-        formatted_row=[]
+        formatted_row = []
 
 
         for cell in row:
@@ -181,12 +182,9 @@ def build_markdown_table(table_lines):
 
 
 
-
-    ###################################################################
-    # Dynamic column sizing
-    ###################################################################
-
-    column_count = len(formatted_rows[0])
+    column_count = len(
+        formatted_rows[0]
+    )
 
 
     page_width = (
@@ -196,8 +194,9 @@ def build_markdown_table(table_lines):
     )
 
 
-    col_width = page_width / column_count
-
+    col_width = (
+        page_width / column_count
+    )
 
 
     table = Table(
@@ -207,98 +206,57 @@ def build_markdown_table(table_lines):
     )
 
 
+    table.setStyle(
+        TableStyle(
+            [
+                (
+                    "BACKGROUND",
+                    (0,0),
+                    (-1,0),
+                    colors.HexColor("#1F4E79")
+                ),
 
-    table.setStyle(TableStyle([
+                (
+                    "TEXTCOLOR",
+                    (0,0),
+                    (-1,0),
+                    colors.white
+                ),
 
+                (
+                    "GRID",
+                    (0,0),
+                    (-1,-1),
+                    0.5,
+                    colors.grey
+                ),
 
-        (
-            "BACKGROUND",
-            (0,0),
-            (-1,0),
-            colors.HexColor("#1F4E79")
-        ),
-
-
-        (
-            "TEXTCOLOR",
-            (0,0),
-            (-1,0),
-            colors.white
-        ),
-
-
-        (
-            "FONTNAME",
-            (0,0),
-            (-1,0),
-            "Helvetica-Bold"
-        ),
-
-
-
-        (
-            "GRID",
-            (0,0),
-            (-1,-1),
-            0.5,
-            colors.grey
-        ),
-
-
-
-        (
-            "VALIGN",
-            (0,0),
-            (-1,-1),
-            "TOP"
-        ),
-
-
-
-        (
-            "LEFTPADDING",
-            (0,0),
-            (-1,-1),
-            5
-        ),
-
-
-        (
-            "RIGHTPADDING",
-            (0,0),
-            (-1,-1),
-            5
-        ),
-
-
-        (
-            "TOPPADDING",
-            (0,0),
-            (-1,-1),
-            5
-        ),
-
-
-        (
-            "BOTTOMPADDING",
-            (0,0),
-            (-1,-1),
-            5
-        ),
-
-
-    ]))
+                (
+                    "VALIGN",
+                    (0,0),
+                    (-1,-1),
+                    "TOP"
+                ),
+            ]
+        )
+    )
 
 
     return table
 
+
+
 ###############################################################################
-# Page Numbers
+# Page Number
 ###############################################################################
 
 def add_page_number(canvas, doc):
 
-    canvas.setFont("Helvetica", 9)
+    canvas.setFont(
+        "Helvetica",
+        9
+    )
+
 
     canvas.drawRightString(
         570,
@@ -309,67 +267,65 @@ def add_page_number(canvas, doc):
 
 
 ###############################################################################
-# PDF Node
+# PDF Generator Node
 ###############################################################################
 
-def pdf_generator_node(state: GuideState):
+def pdf_generator_node(
+    state: GuideState
+):
 
-    print("------ PDF NODE ------")
+    print(
+        "------ PDF NODE ------"
+    )
+
 
     role = state.role
 
-    # CLEAN MARKDOWN HERE
-    markdown = clean_markdown(state.merge_response)
+
+    markdown = clean_markdown(
+        state.merge_response
+    )
 
 
-    print("\n========== CLEANED MARKDOWN ==========\n")
-    print(markdown[:1500])
-    print("\n======================================\n")
+    print(
+        markdown[:1500]
+    )
 
 
-    print("\n========== LINE BY LINE ==========\n")
+    # =================================================
+    # FIXED PATH
+    # =================================================
 
-    for i, line in enumerate(markdown.splitlines()[:40]):
-        print(f"{i:02d}: {repr(line)}")
+    pdf_path = GENERATED_GUIDES_DIR / (
+        f"{role.replace(' ', '_')}_Career_Guide.pdf"
+    )
 
-    print("\n===============================\n")
-
-
-    output_dir = Path("generated_guides")
-    output_dir.mkdir(exist_ok=True)
-
-
-    pdf_path = output_dir / f"{role.replace(' ', '_')}_Career_Guide.pdf"
 
 
     styles = getSampleStyleSheet()
 
+
     story = []
 
-
-
-    ###########################################################################
-    # Cover
-    ###########################################################################
 
     story.append(
         Paragraph(
             f"<b>{role} Career Preparation Guide</b>",
-            styles["Title"],
+            styles["Title"]
         )
     )
 
+
     story.append(
-        Spacer(1,0.35*inch)
+        Spacer(
+            1,
+            0.35*inch
+        )
     )
 
 
-
-    ###########################################################################
-    # Parse Markdown
-    ###########################################################################
-
     lines = markdown.splitlines()
+
 
     i = 0
 
@@ -383,50 +339,66 @@ def pdf_generator_node(state: GuideState):
         if not line:
 
             story.append(
-                Spacer(1,0.12*inch)
+                Spacer(
+                    1,
+                    0.12*inch
+                )
             )
 
             i += 1
+
             continue
 
 
-
-        #######################################################################
-        # Table
-        #######################################################################
 
         if line.startswith("|"):
 
-            table_lines=[]
+            table_lines = []
 
-            while (i < len(lines) and "|" in lines[i]):
-                table_lines.append(lines[i])
-                i+=1
+
+            while (
+                i < len(lines)
+                and "|" in lines[i]
+            ):
+
+                table_lines.append(
+                    lines[i]
+                )
+
+                i += 1
+
 
 
             story.append(
-                build_markdown_table(table_lines)
+                build_markdown_table(
+                    table_lines
+                )
             )
 
+
             story.append(
-                Spacer(1,0.2*inch)
+                Spacer(
+                    1,
+                    0.2*inch
+                )
             )
+
 
             continue
 
 
 
-        #######################################################################
-        # H1
-        #######################################################################
-
-        if re.match(r"^#{1}(?!#)\s+", line):
+        if re.match(
+            r"^#{1}(?!#)\s+",
+            line
+        ):
 
             title = re.sub(
                 r"^#{1}\s+",
                 "",
                 line
             )
+
 
             story.append(
                 Paragraph(
@@ -435,26 +407,24 @@ def pdf_generator_node(state: GuideState):
                 )
             )
 
-            story.append(
-                Spacer(1,0.15*inch)
-            )
 
             i += 1
+
             continue
 
 
 
-        #######################################################################
-        # H2
-        #######################################################################
-
-        if re.match(r"^#{2}(?!#)\s+", line):
+        if re.match(
+            r"^#{2}(?!#)\s+",
+            line
+        ):
 
             title = re.sub(
                 r"^#{2}\s+",
                 "",
                 line
             )
+
 
             story.append(
                 Paragraph(
@@ -463,79 +433,29 @@ def pdf_generator_node(state: GuideState):
                 )
             )
 
-            story.append(
-                Spacer(1,0.10*inch)
-            )
 
             i += 1
+
             continue
 
 
-
-        #######################################################################
-        # H3
-        #######################################################################
-
-        if re.match(r"^#{3}(?!#)\s+", line):
-
-            title = re.sub(
-                r"^#{3}\s+",
-                "",
-                line
-            )
-
-            story.append(
-                Paragraph(
-                    markdown_to_reportlab(title),
-                    styles["Heading3"]
-                )
-            )
-
-            i += 1
-            continue
-
-
-        #######################################################################
-        # Bullet
-        #######################################################################
 
         if line.startswith("- ") or line.startswith("* "):
 
             story.append(
                 Paragraph(
-                    "• " + markdown_to_reportlab(line[2:]),
+                    "• " +
+                    markdown_to_reportlab(line[2:]),
                     styles["BodyText"]
                 )
             )
 
 
-            i+=1
+            i += 1
+
             continue
 
 
-
-        #######################################################################
-        # Numbered List
-        #######################################################################
-
-        if re.match(r"^\d+\.", line):
-
-            story.append(
-                Paragraph(
-                    markdown_to_reportlab(line),
-                    styles["BodyText"]
-                )
-            )
-
-
-            i+=1
-            continue
-
-
-
-        #######################################################################
-        # Normal Paragraph
-        #######################################################################
 
         story.append(
             Paragraph(
@@ -545,30 +465,44 @@ def pdf_generator_node(state: GuideState):
         )
 
 
-        i+=1
+        i += 1
 
 
-
-    ###########################################################################
-    # Build PDF
-    ###########################################################################
 
     doc = SimpleDocTemplate(
+
         str(pdf_path),
+
         rightMargin=0.6*inch,
+
         leftMargin=0.6*inch,
+
         topMargin=0.7*inch,
+
         bottomMargin=0.7*inch,
+
     )
 
 
     doc.build(
+
         story,
+
         onFirstPage=add_page_number,
+
         onLaterPages=add_page_number,
+
+    )
+
+
+    print(
+        "PDF CREATED:",
+        pdf_path
     )
 
 
     return {
+
         "pdf_path": str(pdf_path)
+
     }
