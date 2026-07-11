@@ -1,9 +1,5 @@
 import config_cache
 from fastapi import FastAPI
-from app.graph import guide_graph
-
-
-from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.guide import router as guide_router
 from app.api.health import router as health_router
