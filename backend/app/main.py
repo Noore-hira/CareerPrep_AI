@@ -16,9 +16,7 @@ app = FastAPI(
 
 # Frontend URLs allowed to access backend
 ALLOWED_ORIGINS = [
-    "https://career-prep-ai-6ylv-career-prep-ai.vercel.app",
-    "https://career-prep-ai-6ylv-git-main-career-prep-ai.vercel.app",
-    "https://career-prep-ai-6ylv-n5xsniucp-career-prep-ai.vercel.app",
+    "https://career-prep-ai-mxsx.vercel.app",
 
     # Local development
     "http://localhost:5173",
