@@ -3,37 +3,32 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from dotenv import load_dotenv
 import os
 
-
 load_dotenv()
 
+os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN")
 
-# Load HF token only when needed
-HF_TOKEN = os.getenv("HF_TOKEN")
+# OpenShift writable cache directories
+os.environ["HF_HOME"] = "/tmp/huggingface"
+os.environ["HUGGINGFACE_HUB_CACHE"] = "/tmp/huggingface/hub"
+os.environ["TRANSFORMERS_CACHE"] = "/tmp/huggingface/transformers"
+os.environ["TORCH_HOME"] = "/tmp/torch"
 
-if HF_TOKEN:
-    os.environ["HF_TOKEN"] = HF_TOKEN
 
-
-# Global cache
+# Lazy loaded embedding model
 _embeddings = None
 
 
 def get_embeddings():
-    """
-    Lazy load HuggingFace embedding model.
-    It loads only on the first API request.
-    """
 
     global _embeddings
 
     if _embeddings is None:
+
         print("Loading HuggingFace embedding model...")
 
         _embeddings = HuggingFaceEmbeddings(
             model_name="BAAI/bge-base-en-v1.5"
         )
-
-        print("Embedding model loaded")
 
     return _embeddings
 
@@ -46,11 +41,6 @@ def get_retriever(
     role,
     k: int = 8
 ):
-    """
-    Lazy creates AstraDB retriever.
-    """
-
-    print("Creating AstraDB retriever...")
 
     embeddings = get_embeddings()
 
@@ -61,8 +51,7 @@ def get_retriever(
         token=token,
     )
 
-
-    retriever = vectorstore.as_retriever(
+    return vectorstore.as_retriever(
         search_kwargs={
             "k": k,
             "filter": {
@@ -70,7 +59,3 @@ def get_retriever(
             }
         }
     )
-
-    print("Retriever ready")
-
-    return retriever

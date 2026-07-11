@@ -1,3 +1,11 @@
+import os
+
+os.environ["HF_HOME"] = "/tmp/huggingface"
+os.environ["HUGGINGFACE_HUB_CACHE"] = "/tmp/huggingface/hub"
+os.environ["TRANSFORMERS_CACHE"] = "/tmp/huggingface/transformers"
+os.environ["TORCH_HOME"] = "/tmp/torch"
+
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.guide import router as guide_router
