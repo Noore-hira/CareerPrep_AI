@@ -1,14 +1,15 @@
+import os 
+os.environ["XDG_CACHE_HOME"] = "/tmp/.cache"
+os.environ["HF_HOME"] = "/tmp/.cache/huggingface"
 from langchain_astradb import AstraDBVectorStore
 from langchain_huggingface import HuggingFaceEmbeddings
 from dotenv import load_dotenv
-import os
 
 load_dotenv()
 
 os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN")
 
 # OpenShift writable cache directories
-os.environ["HF_HOME"] = "/tmp/huggingface"
 os.environ["HUGGINGFACE_HUB_CACHE"] = "/tmp/huggingface/hub"
 os.environ["TRANSFORMERS_CACHE"] = "/tmp/huggingface/transformers"
 os.environ["TORCH_HOME"] = "/tmp/torch"

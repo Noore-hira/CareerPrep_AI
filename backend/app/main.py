@@ -1,9 +1,14 @@
 import os
 
-os.environ["HF_HOME"] = "/tmp/huggingface"
-os.environ["HUGGINGFACE_HUB_CACHE"] = "/tmp/huggingface/hub"
-os.environ["TRANSFORMERS_CACHE"] = "/tmp/huggingface/transformers"
-os.environ["TORCH_HOME"] = "/tmp/torch"
+os.environ["XDG_CACHE_HOME"] = "/tmp/.cache"
+os.environ["HF_HOME"] = "/tmp/.cache/huggingface"
+os.environ["HUGGINGFACE_HUB_CACHE"] = "/tmp/.cache/huggingface/hub"
+os.environ["TRANSFORMERS_CACHE"] = "/tmp/.cache/huggingface/transformers"
+os.environ["TORCH_HOME"] = "/tmp/.cache/torch"
+
+
+from fastapi import FastAPI
+from app.graph import guide_graph
 
 
 from fastapi import FastAPI
