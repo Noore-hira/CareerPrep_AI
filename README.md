@@ -1,17 +1,18 @@
 # 🚀 CareerPrep AI - AI Powered Career Preparation Assistant
 
-CareerPrep AI is an **Agentic AI-powered career preparation platform** that automatically generates personalized career preparation guides for different technical roles.
+CareerPrep AI is an **AI-powered career preparation platform** that generates personalized career preparation guides for different technical roles.
 
-The system uses **Large Language Models (LLMs), Retrieval Augmented Generation (RAG), LangGraph multi-agent workflows, and vector databases** to provide structured interview preparation material including:
+The system combines **Large Language Models (LLMs), Retrieval Augmented Generation (RAG), LangGraph workflow orchestration, and vector databases** to create structured career preparation material.
 
-- Role introduction
-- Required skills
-- Learning roadmap
-- Interview questions
-- Projects recommendations
-- Learning resources
-- Career guidance
-- Downloadable PDF preparation guides
+Users can generate complete preparation guides containing:
+
+* Role overview
+* Required skills
+* Learning roadmap
+* Interview preparation
+* Project recommendations
+* Learning resources
+* Downloadable PDF guides
 
 ---
 
@@ -21,92 +22,80 @@ The system uses **Large Language Models (LLMs), Retrieval Augmented Generation (
 
 Users provide a target role such as:
 
-- AI Engineer
-- Software Engineer
-- Data Engineer
-- DevOps Engineer
-- Full Stack Developer
+* AI Engineer
+* Software Engineer
+* Data Engineer
+* DevOps Engineer
+* Full Stack Developer
 
-The system generates a complete preparation guide.
+The system generates a complete preparation guide containing:
 
-Generated content includes:
+### Role Overview
 
-### Introduction
-- Role overview
-- Responsibilities
-- Required technical skills
-- Industry expectations
+Includes:
+
+* Role explanation
+* Responsibilities
+* Industry expectations
+* Required technical knowledge
 
 ### Learning Roadmap
-- Beginner concepts
-- Intermediate skills
-- Advanced topics
-- Practical milestones
+
+Includes:
+
+* Beginner concepts
+* Intermediate skills
+* Advanced topics
+* Practical learning milestones
 
 ### Interview Preparation
-- Technical interview questions
-- Concept-based questions
-- System design questions
-- Role-specific questions
 
-### Projects
-- Beginner projects
-- Intermediate projects
-- Advanced portfolio projects
+Includes:
 
-### Resources
-- Documentation
-- Courses
-- Books
-- Practice platforms
+* Technical questions
+* Conceptual questions
+* Role-specific interview preparation
+* System design topics
+
+### Project Recommendations
+
+Includes:
+
+* Beginner projects
+* Intermediate projects
+* Advanced portfolio projects
+
+### Learning Resources
+
+Includes:
+
+* Documentation
+* Courses
+* Books
+* Practice resources
 
 ---
 
 # 🏗️ System Architecture
 
-
-```
-                User
-                 |
-                 |
-          React Frontend
-                 |
-                 |
-          FastAPI Backend
-                 |
-                 |
-          LangGraph Workflow
-                 |
-    --------------------------------
-    |              |               |
-Planner Agent   RAG Agents    PDF Generator
-                    |
-                    |
-              AstraDB Vector DB
-                    |
-                    |
-             LLM Providers
-```
-
+![Interview_guide](system_architecture.png)
 ---
 
 # 🧠 AI Technologies Used
 
 ## Large Language Models
 
-The application uses LLMs for:
+LLMs are used for:
 
-- Understanding user requirements
-- Generating career guides
-- Answer generation
-- Content refinement
-
+* Understanding user requirements
+* Generating career guides
+* Answer generation
+* Content structuring
 
 Supported providers:
 
-- Groq LLM
-- Hugging Face Models
-
+* Groq LLM
+* HuggingFace Models
 
 ---
 
@@ -114,248 +103,165 @@ Supported providers:
 
 LangChain is used for:
 
-- LLM orchestration
-- Prompt management
-- Retrieval pipelines
-- Document processing
-- Chain creation
-
+* LLM integration
+* Prompt management
+* Retrieval pipelines
+* Document processing
+* Output formatting
 
 Main components:
 
-- Prompt Templates
-- LLM Chains
-- Retrievers
-- Document loaders
-- Output parsing
-
+* Prompt Templates
+* LLM Chains
+* Retrievers
+* Document loaders
+* Output parsers
 
 ---
 
-# 🔄 LangGraph Agent Workflow
+# 🔄 LangGraph Workflow
 
-CareerPrep AI uses LangGraph to build an agentic workflow.
+CareerPrep AI uses **LangGraph for workflow orchestration**.
 
-The workflow consists of multiple specialized nodes.
+The system does not use independent AI agents. Instead, it uses multiple specialized **RAG processing nodes** running inside a LangGraph workflow.
 
 ## Workflow
 
+![Interview_guide](image.png)
+
+---
+
+# 📚 Multi-RAG Architecture
+
+CareerPrep AI uses multiple Retrieval Augmented Generation pipelines.
+
+Each RAG module focuses on a specific part of the career guide.
+
+## Roadmap RAG
+
+Generates:
+
+* Learning paths
+* Required technologies
+* Skill progression
+
+---
+
+## Interview RAG
+
+Generates:
+
+* Technical interview questions
+* Concept explanations
+* Interview preparation material
+
+---
+
+## Project RAG
+
+Generates:
+
+* Portfolio projects
+* Implementation ideas
+* Difficulty levels
+
+---
+
+## Resource RAG
+
+Generates:
+
+* Documentation
+* Courses
+* Books
+* Learning resources
+
+---
+
+# 🔍 Retrieval Augmented Generation (RAG)
+
+RAG improves generation quality by providing relevant external knowledge to the LLM.
+
+Workflow:
 
 ```
 User Query
 
-      |
       ↓
 
-Analyze Request Node
+Query Processing
 
-      |
       ↓
 
-Parallel RAG Agents
+Vector Similarity Search
 
-      |
-      |
-      ├── Introduction Agent
-      |
-      ├── Roadmap Agent
-      |
-      ├── Interview Agent
-      |
-      ├── Projects Agent
-      |
-      └── Resources Agent
-
-
-      |
       ↓
 
-Merge Node
+Relevant Document Retrieval
 
-      |
       ↓
-
-PDF Generator
-
-      |
-      ↓
-
-Final Career Guide
-```
-
----
-
-# 🤖 AI Agents
-
-## 1. Request Analyzer Agent
-
-Responsibilities:
-
-- Understand user requirements
-- Identify target role
-- Extract required sections
-
-
----
-
-## 2. Introduction RAG Agent
-
-Generates:
-
-- Role overview
-- Responsibilities
-- Skills requirements
-
-
----
-
-## 3. Roadmap RAG Agent
-
-Creates:
-
-- Learning path
-- Required technologies
-- Skill progression
-
-
----
-
-## 4. Interview RAG Agent
-
-Generates:
-
-- Technical questions
-- Conceptual questions
-- Interview preparation material
-
-
----
-
-## 5. Project Recommendation Agent
-
-Provides:
-
-- Portfolio projects
-- Implementation ideas
-- Difficulty levels
-
-
----
-
-## 6. Resource Agent
-
-Provides:
-
-- Documentation
-- Courses
-- Books
-- Learning resources
-
-
----
-
-# 📚 Retrieval Augmented Generation (RAG)
-
-CareerPrep AI uses RAG to improve response quality.
-
-Instead of relying only on LLM knowledge:
-
-```
-User Query
-
-    ↓
-
-Retrieve Relevant Documents
-
-    ↓
 
 Context Injection
 
-    ↓
+      ↓
 
 LLM Generation
 
-    ↓
+      ↓
 
-Final Answer
+Final Response
 ```
 
 Benefits:
 
-- Reduces hallucination
-- Provides domain-specific answers
-- Uses updated knowledge
-- Improves accuracy
-
+* Reduces hallucination
+* Provides domain-specific knowledge
+* Improves response accuracy
+* Uses custom knowledge sources
 
 ---
 
 # 🗄️ Vector Database
 
-## AstraDB
+## DataStax AstraDB
 
-CareerPrep AI uses:
+CareerPrep AI uses **DataStax AstraDB** as the vector database for storing and retrieving domain-specific knowledge used by the RAG pipelines.
 
-**DataStax AstraDB**
-
-as the vector database.
-
+The vector database stores document embeddings along with **custom metadata** to enable more accurate and targeted retrieval.
 
 Used for:
 
 - Storing document embeddings
-- Semantic search
-- Context retrieval
-
+- Semantic similarity search
+- Context retrieval for RAG pipelines
+- Metadata-based filtering
+- Knowledge separation across different career roles and guide sections
 
 Architecture:
-
 
 ```
 Documents
 
-   ↓
+    ↓
 
 Text Chunking
 
-   ↓
+    ↓
 
-Embedding Model
+Embedding Generation
 
-   ↓
+    ↓
 
 AstraDB Vector Store
 
-   ↓
+    ↓
 
 Similarity Search
 
-   ↓
+    ↓
 
 LLM Context
 ```
-
-
-Advantages:
-
-- Cloud hosted
-- Scalable
-- Production ready
-- No local storage dependency
-
-
----
-
-# 🔎 Search Integration
-
-## Tavily Search API
-
-Used for:
-
-- Finding updated interview information
-- Fetching latest resources
-- External knowledge retrieval
-
 
 ---
 
@@ -363,13 +269,12 @@ Used for:
 
 ## FastAPI
 
-Backend framework used for:
+Used for:
 
-- REST APIs
-- Request handling
-- API routing
-- Backend services
-
+* REST API development
+* Request handling
+* Backend services
+* API routing
 
 Backend structure:
 
@@ -391,10 +296,6 @@ backend/
 │
 ├── retrievers/
 │
-├── services/
-│
-├── schemas/
-│
 ├── prompts/
 │
 ├── graph.py
@@ -406,84 +307,52 @@ backend/
 
 # 🎨 Frontend Technology Stack
 
-Frontend is built using:
-
 ## React
 
 Used for:
 
-- UI components
-- State management
-- User interaction
-
-
-## Vite
-
-Used as:
-
-- Development server
-- Build tool
-
+* UI components
+* User interaction
+* State management
 
 ## TypeScript
 
 Used for:
 
-- Type safety
-- Better maintainability
+* Type safety
+* Maintainable frontend development
 
+## Vite
+
+Used for:
+
+* Fast development
+* Production builds
 
 ## Tailwind CSS
 
 Used for:
 
-- Responsive UI
-- Styling
+* Responsive UI
+* Modern styling
 
+Additional libraries:
 
-## Additional Libraries
-
-### React Query
-
-Used for:
-
-- API state management
-- Data fetching
-
-
-### Axios
-
-Used for:
-
-- Backend API communication
-
-
-### Framer Motion
-
-Used for:
-
-- Animations
-
-
-### React Markdown
-
-Used for:
-
-- Rendering generated guides
-
+* Axios → API communication
+* Framer Motion → Animations
+* React Markdown → Markdown rendering
 
 ---
 
 # 📄 PDF Generation
 
-The system generates downloadable career preparation PDFs.
+CareerPrep AI generates downloadable PDF preparation guides.
 
-Generated guides include:
+Features:
 
-- Structured sections
-- Markdown conversion
-- Professional formatting
-
+* Structured formatting
+* Markdown conversion
+* Professional document layout
 
 Example:
 
@@ -496,34 +365,25 @@ Software_Engineer_Career_Guide.pdf
 
 # 🔐 Environment Variables
 
-Create:
-
-```
-.env
-```
-
 Example:
 
 ```env
 
 # AstraDB
+
 ASTRA_DB_API_ENDPOINT=
 ASTRA_DB_APPLICATION_TOKEN=
-ASTRA_DB_NAMESPACE=
 
 
 # LLM
+
 GROQ_API_KEY=
 
-# HuggingFace
 HF_TOKEN=
-
-# Search
-TAVILY_API_KEY=
 
 ```
 
-Never commit `.env` to GitHub.
+Never commit environment variables or secrets to GitHub.
 
 ---
 
@@ -531,25 +391,19 @@ Never commit `.env` to GitHub.
 
 ## Clone Repository
 
-
 ```bash
 git clone https://github.com/Noore-hira/CareerPrep_AI.git
 
 cd CareerPrep_AI
 ```
 
-
 ---
 
 # Backend Setup
 
-
-Navigate:
-
 ```bash
 cd backend
 ```
-
 
 Create environment:
 
@@ -557,57 +411,37 @@ Create environment:
 python -m venv .venv
 ```
 
-
-Activate:
-
-Windows:
-
-```bash
-.venv\Scripts\activate
-```
-
-
 Install dependencies:
-
 
 ```bash
 pip install -r requirements.txt
 ```
 
-
 Run backend:
-
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-
-Backend runs:
+Backend:
 
 ```
 http://localhost:8000
 ```
 
-
-Swagger documentation:
+Swagger:
 
 ```
 http://localhost:8000/docs
 ```
 
-
 ---
 
 # Frontend Setup
 
-
-Navigate:
-
 ```bash
 cd frontend
 ```
-
 
 Install dependencies:
 
@@ -615,56 +449,45 @@ Install dependencies:
 pnpm install
 ```
 
-
 Run:
 
 ```bash
 pnpm dev
 ```
 
-
-Frontend runs:
+Frontend:
 
 ```
 http://localhost:5173
 ```
 
-
 ---
 
 # 🚀 Deployment
 
-
-## Backend Deployment
-
-Backend can be deployed on:
-
-- Render
-- AWS
-- Google Cloud
-- Azure
-
-
-Production command:
-
-
-```bash
-uvicorn app.main:app --host 0.0.0.0 --port $PORT
-```
-
-
-Environment variables are configured through deployment platform.
-
-
----
-
 ## Frontend Deployment
 
-Frontend can be deployed on:
+Frontend is deployed on:
 
-- Vercel
-- Netlify
+**Vercel**
 
+Deployment process:
+
+```
+GitHub Repository
+
+        ↓
+
+Vercel Build
+
+        ↓
+
+React Production Bundle
+
+        ↓
+
+Hosted Frontend
+```
 
 Production build:
 
@@ -672,6 +495,43 @@ Production build:
 pnpm build
 ```
 
+---
+
+## Backend Deployment
+
+Backend is deployed on:
+
+**Red Hat OpenShift Developer Sandbox**
+
+Deployment architecture:
+
+```
+FastAPI Application
+
+        ↓
+
+Docker Container
+
+        ↓
+
+OpenShift Deployment
+
+        ↓
+
+Running Backend Pod
+
+        ↓
+
+Public API Route
+```
+
+Production command:
+
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port $PORT
+```
+
+Environment variables are configured through OpenShift.
 
 ---
 
@@ -679,16 +539,15 @@ pnpm build
 
 Implemented:
 
-- Environment variable protection
-- API key isolation
-- CORS configuration
+* Environment variable management
+* API key handling
+* CORS configuration
 
-
-Production CORS:
+Production CORS should restrict allowed origins:
 
 ```python
 allow_origins=[
-"https://your-frontend-domain.com"
+"https://your-vercel-domain.com"
 ]
 ```
 
@@ -698,16 +557,13 @@ allow_origins=[
 
 Possible enhancements:
 
-- User authentication
-- Saved career paths
-- Progress tracking
-- AI mock interviewer
-- Voice interview simulation
-- Resume analysis
-- LinkedIn profile analysis
-- Personalized learning plans
-- Multi-language support
-
+* User authentication
+* Saved career plans
+* Progress tracking
+* AI mock interviews
+* Resume analysis
+* Personalized learning paths
+* Voice interview simulation
 
 ---
 
@@ -715,27 +571,26 @@ Possible enhancements:
 
 Developed as an AI Engineering project demonstrating:
 
-- Generative AI
-- Agentic workflows
-- RAG systems
-- LLM applications
-- Full-stack AI development
-
+* Generative AI applications
+* Retrieval Augmented Generation
+* LangGraph workflows
+* LLM applications
+* Full-stack AI development
 
 ---
 
 # ⭐ Tech Stack Summary
 
-| Category | Technology |
-|-|-|
-| Frontend | React, TypeScript, Vite, Tailwind CSS |
-| Backend | FastAPI |
-| AI Framework | LangChain |
-| Agent Framework | LangGraph |
-| Vector Database | AstraDB |
-| LLM | Groq / HuggingFace |
-| Search | Tavily |
-| API Communication | Axios |
-| PDF Generation | Python PDF Libraries |
-| Deployment | Render + Vercel |
-
+| Category               | Technology                            |
+| ---------------------- | ------------------------------------- |
+| Frontend               | React, TypeScript, Vite, Tailwind CSS |
+| Backend                | FastAPI                               |
+| AI Framework           | LangChain                             |
+| Workflow Orchestration | LangGraph                             |
+| Retrieval System       | Multi-RAG Architecture                |
+| Vector Database        | AstraDB                               |
+| LLM Providers          | Groq, HuggingFace                     |
+| API Communication      | Axios                                 |
+| PDF Generation         | ReportLab                             |
+| Frontend Deployment    | Vercel                                |
+| Backend Deployment     | Red Hat OpenShift                     |
