@@ -16,21 +16,14 @@ const MODELS = [
 
 
 interface SettingsSidebarProps {
-
   open: boolean;
-
   onClose: () => void;
-
 }
 
 
-
 export default function SettingsSidebar({
-
   open,
-
   onClose,
-
 }: SettingsSidebarProps) {
 
 
@@ -47,78 +40,83 @@ export default function SettingsSidebar({
 
 
 
+  // Load session settings
   useEffect(() => {
 
 
+    // Remove old permanently saved key
+    localStorage.removeItem(
+      "groq_api_key"
+    );
+
+
     const savedKey =
-      localStorage.getItem(
+      sessionStorage.getItem(
         "groq_api_key"
       );
 
 
     const savedModel =
-      localStorage.getItem(
+      sessionStorage.getItem(
         "groq_model"
       );
 
 
 
-    if(savedKey){
+    if (savedKey) {
 
       setApiKey(savedKey);
-
-      setRemember(true);
 
     }
 
 
 
-    if(savedModel){
+    if (savedModel) {
 
       setModel(savedModel);
 
     }
 
 
+  }, []);
 
-  },[]);
 
 
 
 
   const handleApiKeyChange = (
-    value:string
-  )=>{
+    value: string
+  ) => {
 
 
     setApiKey(value);
 
 
-    // keep localStorage updated
-    if(remember){
 
-      localStorage.setItem(
+    if (remember) {
+
+      sessionStorage.setItem(
         "groq_api_key",
         value.trim()
       );
 
     }
 
-
   };
 
 
 
 
+
   const handleModelChange = (
-    value:string
-  )=>{
+    value: string
+  ) => {
 
 
     setModel(value);
 
 
-    localStorage.setItem(
+    sessionStorage.setItem(
       "groq_model",
       value
     );
@@ -130,15 +128,16 @@ export default function SettingsSidebar({
 
 
 
-  const saveSettings = ()=>{
+  const saveSettings = () => {
 
 
-    if(!apiKey.trim()){
+    if (!apiKey.trim()) {
 
 
       alert(
         "Please enter your Groq API Key."
       );
+
 
       return;
 
@@ -147,10 +146,10 @@ export default function SettingsSidebar({
 
 
 
-    if(remember){
+    if (remember) {
 
 
-      localStorage.setItem(
+      sessionStorage.setItem(
         "groq_api_key",
         apiKey.trim()
       );
@@ -158,10 +157,10 @@ export default function SettingsSidebar({
 
     }
 
-    else{
+    else {
 
 
-      localStorage.removeItem(
+      sessionStorage.removeItem(
         "groq_api_key"
       );
 
@@ -170,28 +169,32 @@ export default function SettingsSidebar({
 
 
 
-    localStorage.setItem(
+    sessionStorage.setItem(
       "groq_model",
       model
     );
 
 
 
+
     console.log(
       "Saved API Key:",
-      apiKey.substring(0,10)+"..."
+      apiKey.substring(0, 10) + "..."
     );
+
 
 
     alert(
-      "Settings saved successfully."
+      "Settings saved for this session."
     );
+
 
 
     onClose();
 
 
   };
+
 
 
 
@@ -209,13 +212,18 @@ export default function SettingsSidebar({
 
           <motion.div
 
-            initial={{opacity:0}}
+            initial={{ opacity: 0 }}
 
-            animate={{opacity:0.45}}
+            animate={{ opacity: 0.45 }}
 
-            exit={{opacity:0}}
+            exit={{ opacity: 0 }}
 
-            className="fixed inset-0 bg-black z-40"
+            className="
+              fixed
+              inset-0
+              bg-black
+              z-40
+            "
 
             onClick={onClose}
 
@@ -227,15 +235,15 @@ export default function SettingsSidebar({
           <motion.div
 
 
-            initial={{x:-420}}
+            initial={{ x: -420 }}
 
-            animate={{x:0}}
+            animate={{ x: 0 }}
 
-            exit={{x:-420}}
+            exit={{ x: -420 }}
 
 
             transition={{
-              duration:0.25
+              duration: 0.25
             }}
 
 
@@ -257,10 +265,20 @@ export default function SettingsSidebar({
 
 
 
-            <div className="flex justify-between items-center mb-8">
+
+            <div className="
+              flex
+              justify-between
+              items-center
+              mb-8
+            ">
 
 
-              <h2 className="text-xl font-bold text-white">
+              <h2 className="
+                text-xl
+                font-bold
+                text-white
+              ">
 
                 Groq Settings
 
@@ -268,9 +286,16 @@ export default function SettingsSidebar({
 
 
 
+
               <button onClick={onClose}>
 
-                <RiCloseLine className="text-2xl text-gray-400 hover:text-white"/>
+                <RiCloseLine
+                  className="
+                    text-2xl
+                    text-gray-400
+                    hover:text-white
+                  "
+                />
 
               </button>
 
@@ -280,7 +305,13 @@ export default function SettingsSidebar({
 
 
 
-            <label className="block text-sm text-gray-300 mb-2">
+
+            <label className="
+              block
+              text-sm
+              text-gray-300
+              mb-2
+            ">
 
               Groq API Key
 
@@ -288,7 +319,11 @@ export default function SettingsSidebar({
 
 
 
-            <div className="relative mb-6">
+
+            <div className="
+              relative
+              mb-6
+            ">
 
 
               <input
@@ -332,11 +367,12 @@ export default function SettingsSidebar({
 
 
 
+
               <button
 
                 type="button"
 
-                onClick={()=>
+                onClick={() =>
                   setShowKey(!showKey)
                 }
 
@@ -352,9 +388,9 @@ export default function SettingsSidebar({
                 {
                   showKey
                   ?
-                  <RiEyeOffLine/>
+                  <RiEyeOffLine />
                   :
-                  <RiEyeLine/>
+                  <RiEyeLine />
                 }
 
 
@@ -367,11 +403,17 @@ export default function SettingsSidebar({
 
 
 
-            <label className="block text-sm text-gray-300 mb-2">
+            <label className="
+              block
+              text-sm
+              text-gray-300
+              mb-2
+            ">
 
               Model
 
             </label>
+
 
 
 
@@ -426,7 +468,13 @@ export default function SettingsSidebar({
 
 
 
-            <label className="flex items-center gap-3 mb-8 cursor-pointer">
+            <label className="
+              flex
+              items-center
+              gap-3
+              mb-8
+              cursor-pointer
+            ">
 
 
               <input
@@ -435,16 +483,19 @@ export default function SettingsSidebar({
 
                 checked={remember}
 
-                onChange={()=>
+                onChange={() =>
                   setRemember(!remember)
                 }
 
               />
 
 
-              <span className="text-gray-300">
 
-                Remember API Key
+              <span className="
+                text-gray-300
+              ">
+
+                Keep API Key for this session
 
               </span>
 
@@ -478,7 +529,7 @@ export default function SettingsSidebar({
 
             >
 
-              <RiSaveLine/>
+              <RiSaveLine />
 
               Save Settings
 

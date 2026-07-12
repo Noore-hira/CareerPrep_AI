@@ -25,6 +25,13 @@ export function HomePage({
   onGuideReady,
   onOpenSidebar,
 }: HomePageProps) {
+    useEffect(() => {
+
+    // Remove old keys saved by previous localStorage version
+    localStorage.removeItem("groq_api_key");
+    localStorage.removeItem("groq_model");
+
+  }, []);
   const [prompt, setPrompt] = useState("");
   const [localLoading, setLocalLoading] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
@@ -49,11 +56,11 @@ export function HomePage({
     try {
 
       const apiKey =
-        localStorage.getItem("groq_api_key") || "";
+        sessionStorage.getItem("groq_api_key") || "";
 
 
       const model =
-        localStorage.getItem("groq_model") ||
+        sessionStorage.getItem("groq_model") ||
         "llama-3.3-70b-versatile";
 
 
